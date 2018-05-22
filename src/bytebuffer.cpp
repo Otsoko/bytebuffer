@@ -53,8 +53,29 @@ short ByteBuffer::getShortAt(int index){
 
 void ByteBuffer::putShort(short value){
 	*(short*)(buff+pos) = value;
+	pos += sizeof(short);
 }
 
 void ByteBuffer::putShortAt(short value, int index){
 	*(short*)(buff+index) = value;
+}
+
+int ByteBuffer::getInt(){
+	int i = *(int*)(buff+pos);
+	pos += sizeof(int);
+	return i;
+}
+
+int ByteBuffer::getIntAt(int index){
+	int i = *(int*)(buff+index);
+	return i;
+}
+
+void ByteBuffer::putInt(int value){
+	*(int*)(buff+pos) = value;
+	pos += sizeof(int);
+}
+
+void ByteBuffer::putIntAt(int value, int index){
+	*(int*)(buff+index) = value;
 }

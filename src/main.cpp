@@ -6,13 +6,14 @@ using namespace std;
 
 int main(int argc, char const *argv[]) {
 	
-  ByteBuffer bytebuffer(5);
+  ByteBuffer bytebuffer(9);
   cout << "Size: " << bytebuffer.getSize() << endl;
   
   bytebuffer.put(64);
   bytebuffer.put(33);
   bytebuffer.put(17);
   bytebuffer.putShort(345);
+  bytebuffer.putInt(123456);
   
   bytebuffer.reset();
   
@@ -20,8 +21,9 @@ int main(int argc, char const *argv[]) {
   byte c = bytebuffer.get();
   byte d = bytebuffer.get();
   short s = bytebuffer.getShort();
+  int in = bytebuffer.getInt();
   
-  cout << "bytes leídos: " << (int)d << ", " << (short)s << endl;
+  cout << "bytes leídos: " << (int)in << ", " << (short)s << endl;
   
   bytebuffer.putAt(44, 2);
   
@@ -31,6 +33,10 @@ int main(int argc, char const *argv[]) {
   
   bytebuffer.putShortAt(55, 2);
   cout << (int)bytebuffer.getShortAt(2) << endl;
+  cout << (int)bytebuffer.getIntAt(5) << endl;
+  
+  bytebuffer.putIntAt(78945, 2);
+  cout << (int)bytebuffer.getIntAt(2) << endl;
   
   return 0;
 }
