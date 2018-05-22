@@ -5,15 +5,27 @@
 using namespace std;
 
 int main(int argc, char const *argv[]) {
-  cout << "Funcionando" << endl;
-
-  ByteBuffer bytebuffer(7);
+	
+  ByteBuffer bytebuffer(5);
   cout << "Size: " << bytebuffer.getSize() << endl;
   
   bytebuffer.put(64);
+  bytebuffer.put(33);
+  bytebuffer.put(17);
+  bytebuffer.putShort(345);
+  
   bytebuffer.reset();
+  
   byte b = bytebuffer.get();
-  cout << "byte leído: " << (int)b << endl;
+  byte c = bytebuffer.get();
+  byte d = bytebuffer.get();
+  short s = bytebuffer.getShort();
+  
+  cout << "bytes leídos: " << (int)d << ", " << (short)s << endl;
+  
+  for(int i=0; i < bytebuffer.getSize(); i++){
+	  cout << i << " " << (int)bytebuffer.getAt(i) << endl;
+  }
   
   return 0;
 }

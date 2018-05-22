@@ -2,6 +2,8 @@
 #define _BYTEBUFFER_H_
 
 #include <cstddef>
+//#include <cstdint>
+#include <string>
 
 typedef unsigned char byte;
 
@@ -18,8 +20,11 @@ public:
   void reset();
   
   byte get();
+  byte getAt(int index);
+  short getShort();
   
   void put(byte value);
+  void putShort(short value);
 };
 
 #endif
