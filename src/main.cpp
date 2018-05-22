@@ -23,9 +23,14 @@ int main(int argc, char const *argv[]) {
   
   cout << "bytes leídos: " << (int)d << ", " << (short)s << endl;
   
+  bytebuffer.putAt(44, 2);
+  
   for(int i=0; i < bytebuffer.getSize(); i++){
 	  cout << i << " " << (int)bytebuffer.getAt(i) << endl;
   }
+  
+  bytebuffer.putShortAt(55, 2);
+  cout << (int)bytebuffer.getShortAt(2) << endl;
   
   return 0;
 }

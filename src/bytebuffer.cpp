@@ -35,12 +35,26 @@ void ByteBuffer::put(byte value){
 	buff[pos++] = value;
 }
 
+void ByteBuffer::putAt(byte value, int index){
+	buff[index] = value;
+}
+
 short ByteBuffer::getShort(){
 	short s = *(short*)(buff+pos);
 	pos += sizeof(short);
 	return s;
 }
 
+short ByteBuffer::getShortAt(int index){
+	short s = *(short*)(buff+index);
+	pos += sizeof(short);
+	return s;
+}
+
 void ByteBuffer::putShort(short value){
 	*(short*)(buff+pos) = value;
+}
+
+void ByteBuffer::putShortAt(short value, int index){
+	*(short*)(buff+index) = value;
 }
