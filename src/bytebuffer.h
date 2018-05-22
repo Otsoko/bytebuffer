@@ -2,7 +2,6 @@
 #define _BYTEBUFFER_H_
 
 #include <cstddef>
-#include <string>
 
 typedef unsigned char byte;
 
