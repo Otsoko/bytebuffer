@@ -23,7 +23,7 @@ int main(int argc, char const *argv[]) {
     // Insertamos un int
     bytebuffer.putInt(123456);
 
-    // Reseteamos la posición actual
+    // Volvemos al principio del buffer para empezar a leer
     bytebuffer.reset();
 
     // Leemos un byte
