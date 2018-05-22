@@ -45,7 +45,6 @@ short ByteBuffer::getShort() {
 
 short ByteBuffer::getShortAt(int index) {
     short s = *(short *) (buff + index);
-    pos += sizeof(short);
     return s;
 }
 
