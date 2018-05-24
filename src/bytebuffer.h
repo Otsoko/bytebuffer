@@ -45,6 +45,8 @@ public:
     void putInt(int value);
 
     void putIntAt(int value, int index);
+
+    char *getHexString();
 };
 
 #endif

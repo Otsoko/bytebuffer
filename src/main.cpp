@@ -65,5 +65,7 @@ int main(int argc, char const *argv[]) {
     }
     cout << endl;
 
+    cout << "HexString: " << bytebuffer.getHexString() << endl;
+
     return 0;
 }

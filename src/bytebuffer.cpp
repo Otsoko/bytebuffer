@@ -80,3 +80,16 @@ void ByteBuffer::putInt(int value) {
 void ByteBuffer::putIntAt(int value, int index) {
     *(int *) (buff + index) = value;
 }
+
+char *ByteBuffer::getHexString() {
+    char *str        = (char *) malloc(2 * size * sizeof(char));
+    char  hexArray[] = "0123456789ABCDEF";
+
+    for (std::size_t i = 0; i < size; i++) {
+        byte v         = buff[i] & 0xFF;
+        str[i * 2]     = hexArray[v >> 4];
+        str[i * 2 + 1] = hexArray[v & 0x0F];
+    }
+
+    return str;
+}
