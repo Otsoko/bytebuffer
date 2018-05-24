@@ -5,6 +5,8 @@
 
 using namespace std;
 
+void printBB(ByteBuffer *byteBuffer);
+
 int main(int argc, char const *argv[]) {
 
     // Creamos el ByteBuffer con un tamaño de 9 bytes
@@ -38,17 +40,14 @@ int main(int argc, char const *argv[]) {
     // Leemos un int
     int in = bytebuffer.getInt();
 
-    cout << "Bytes leídos: " << (int) b << ", " << (int) c << ", " << (int) d
+    cout << "Valores leídos: " << (int) b << ", " << (int) c << ", " << (int) d
          << ", " << (int) s << ", " << (int) in << endl;
 
     // Insertamos un byte en la posición 2
     bytebuffer.putAt(44, 2);
 
     // Mostramos el contenido del ByteBuffer
-    for (size_t i = 0; i < bytebuffer.getSize(); i++) {
-        cout << (int) bytebuffer.getAt(i) << " ";
-    }
-    cout << endl;
+    printBB(&bytebuffer);
 
     // Insertamos un short en la posición 2
     bytebuffer.putShortAt(55, 2);
@@ -81,10 +80,15 @@ int main(int argc, char const *argv[]) {
     ByteBuffer cloned = bytebuffer.clone();
 
     // Mostramos el contenido del ByteBuffer copiado
-    for (size_t i = 0; i < cloned.getSize(); i++) {
-        cout << (int) cloned.getAt(i) << " ";
-    }
-    cout << endl;
+    printBB(&cloned);
 
     return 0;
+}
+
+void printBB(ByteBuffer *byteBuffer) {
+    // Mostramos el contenido del ByteBuffer
+    for (size_t i = 0; i < byteBuffer->getSize(); i++) {
+        cout << (int) byteBuffer->getAt(i) << " ";
+    }
+    cout << endl;
 }
