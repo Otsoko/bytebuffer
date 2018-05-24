@@ -45,7 +45,7 @@ int main(int argc, char const *argv[]) {
     bytebuffer.putAt(44, 2);
 
     // Mostramos el contenido del ByteBuffer
-    for (std::size_t i = 0; i < bytebuffer.getSize(); i++) {
+    for (size_t i = 0; i < bytebuffer.getSize(); i++) {
         cout << (int) bytebuffer.getAt(i) << " ";
     }
     cout << endl;
@@ -61,7 +61,7 @@ int main(int argc, char const *argv[]) {
     cout << (int) bytebuffer.getIntAt(2) << endl;
 
     byte *bytes = bytebuffer.getBytes();
-    for (std::size_t i = 0; i < bytebuffer.getSize(); i++) {
+    for (size_t i = 0; i < bytebuffer.getSize(); i++) {
         cout << (int) bytes[i] << " ";
     }
     cout << endl;
@@ -76,6 +76,15 @@ int main(int argc, char const *argv[]) {
 
     // Liberar el devuelto
     free(hex1);
+
+    // Creamos una copia del ByteBuffer
+    ByteBuffer cloned = bytebuffer.clone();
+
+    // Mostramos el contenido del ByteBuffer copiado
+    for (size_t i = 0; i < cloned.getSize(); i++) {
+        cout << (int) cloned.getAt(i) << " ";
+    }
+    cout << endl;
 
     return 0;
 }

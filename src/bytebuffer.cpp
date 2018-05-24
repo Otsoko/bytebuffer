@@ -2,7 +2,7 @@
 #include <iostream>
 #include <stdlib.h>
 
-ByteBuffer::ByteBuffer(std::size_t size) {
+ByteBuffer::ByteBuffer(size_t size) {
     this->size = size;
     pos        = 0;
     buff       = (byte *) malloc(size * sizeof(byte));
@@ -13,7 +13,7 @@ ByteBuffer::~ByteBuffer() {
     free(buff);
 }
 
-std::size_t ByteBuffer::getSize() {
+size_t ByteBuffer::getSize() {
     return size;
 }
 
@@ -85,7 +85,7 @@ char *ByteBuffer::getHexString() {
     char *str        = (char *) malloc(2 * size * sizeof(char));
     char  hexArray[] = "0123456789ABCDEF";
 
-    for (std::size_t i = 0; i < size; i++) {
+    for (size_t i = 0; i < size; i++) {
         byte v         = buff[i] & 0xFF;
         str[i * 2]     = hexArray[v >> 4];
         str[i * 2 + 1] = hexArray[v & 0x0F];
@@ -97,9 +97,19 @@ char *ByteBuffer::getHexString() {
 void ByteBuffer::getHexString(char *str) {
     char hexArray[] = "0123456789ABCDEF";
 
-    for (std::size_t i = 0; i < size; i++) {
+    for (size_t i = 0; i < size; i++) {
         byte v         = buff[i] & 0xFF;
         str[i * 2]     = hexArray[v >> 4];
         str[i * 2 + 1] = hexArray[v & 0x0F];
     }
+}
+
+ByteBuffer ByteBuffer::clone() {
+    ByteBuffer cloned(size);
+
+    for (size_t i = 0; i < size; i++) {
+        cloned.putAt(buff[i], i);
+    }
+
+    return cloned;
 }

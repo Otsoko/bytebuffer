@@ -37,4 +37,7 @@ byte *bytes = bytebuffer.getBytes();
 char *hex = bytebuffer.getHexString();
 std::cout << "HexString: " << hex << std::endl;
 free(hex);
+
+// Clone the ByteBuffer
+ByteBuffer cloned = bytebuffer.clone();
 ```

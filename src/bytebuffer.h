@@ -7,9 +7,9 @@ typedef unsigned char byte;
 
 class ByteBuffer {
 
-    byte *      buff;
-    std::size_t size;
-    int         pos;
+    byte * buff;
+    size_t size;
+    int    pos;
 
 public:
     ByteBuffer(std::size_t size);
@@ -49,6 +49,8 @@ public:
     char *getHexString();
 
     void getHexString(char *str);
+
+    ByteBuffer clone();
 };
 
 #endif
