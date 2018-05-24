@@ -21,6 +21,10 @@ void ByteBuffer::reset() {
     pos = 0;
 }
 
+byte *ByteBuffer::getBytes() {
+    return buff;
+}
+
 byte ByteBuffer::get() {
     return buff[pos++];
 }

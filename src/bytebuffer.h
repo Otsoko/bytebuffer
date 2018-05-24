@@ -20,6 +20,8 @@ public:
 
     void reset();
 
+    byte *getBytes();
+
     byte get();
 
     byte getAt(int index);

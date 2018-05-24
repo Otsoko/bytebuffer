@@ -59,5 +59,11 @@ int main(int argc, char const *argv[]) {
     bytebuffer.putIntAt(78945, 2);
     cout << (int) bytebuffer.getIntAt(2) << endl;
 
+    byte *bytes = bytebuffer.getBytes();
+    for (std::size_t i = 0; i < bytebuffer.getSize(); i++) {
+        cout << (int) bytes[i] << " ";
+    }
+    cout << endl;
+
     return 0;
 }
