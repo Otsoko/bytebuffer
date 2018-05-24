@@ -1,11 +1,11 @@
 #include "bytebuffer.h"
-#include <stdlib.h>
 #include <iostream>
+#include <stdlib.h>
 
 ByteBuffer::ByteBuffer(std::size_t size) {
     this->size = size;
-    pos = 0;
-    buff = (byte *) malloc(size * sizeof(byte));
+    pos        = 0;
+    buff       = (byte *) malloc(size * sizeof(byte));
 }
 
 ByteBuffer::~ByteBuffer() {

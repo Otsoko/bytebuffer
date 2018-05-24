@@ -1,6 +1,6 @@
-#include <iostream>
-#include <cstddef>
 #include "bytebuffer.h"
+#include <cstddef>
+#include <iostream>
 
 using namespace std;
 
@@ -37,8 +37,8 @@ int main(int argc, char const *argv[]) {
     // Leemos un int
     int in = bytebuffer.getInt();
 
-    cout << "Bytes leídos: " << (int) b << ", " << (int) c << ", " << (int) d << ", " << (int) s << ", " << (int) in
-         << endl;
+    cout << "Bytes leídos: " << (int) b << ", " << (int) c << ", " << (int) d
+         << ", " << (int) s << ", " << (int) in << endl;
 
     // Insertamos un byte en la posición 2
     bytebuffer.putAt(44, 2);

@@ -7,9 +7,9 @@ typedef unsigned char byte;
 
 class ByteBuffer {
 
-    byte *buff;
+    byte *      buff;
     std::size_t size;
-    int pos;
+    int         pos;
 
 public:
     ByteBuffer(std::size_t size);
@@ -19,7 +19,6 @@ public:
     std::size_t getSize();
 
     void reset();
-    
 
     byte get();
 
@@ -32,7 +31,6 @@ public:
     int getInt();
 
     int getIntAt(int index);
-    
 
     void put(byte value);
 
@@ -45,7 +43,6 @@ public:
     void putInt(int value);
 
     void putIntAt(int value, int index);
-
 };
 
 #endif
