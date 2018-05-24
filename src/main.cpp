@@ -1,6 +1,7 @@
 #include "bytebuffer.h"
 #include <cstddef>
 #include <iostream>
+#include <stdlib.h>
 
 using namespace std;
 
@@ -65,7 +66,16 @@ int main(int argc, char const *argv[]) {
     }
     cout << endl;
 
-    cout << "HexString: " << bytebuffer.getHexString() << endl;
+    char *hex1 = bytebuffer.getHexString();
+    char  hex2[bytebuffer.getSize() * 2];
+
+    bytebuffer.getHexString(hex2);
+
+    cout << "HexString 1: " << hex1 << endl;
+    cout << "HexString 2: " << hex2 << endl;
+
+    // Liberar el devuelto
+    free(hex1);
 
     return 0;
 }

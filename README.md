@@ -34,5 +34,7 @@ bytebuffer.getIntAt(3);
 byte *bytes = bytebuffer.getBytes();
 
 // Print the hex string
-std::cout << "HexString: " << bytebuffer.getHexString() << std::endl;
+char *hex = bytebuffer.getHexString();
+std::cout << "HexString: " << hex << std::endl;
+free(hex);
 ```
