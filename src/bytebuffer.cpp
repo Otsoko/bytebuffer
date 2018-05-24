@@ -102,6 +102,7 @@ void ByteBuffer::getHexString(char *str) {
         str[i * 2]     = hexArray[v >> 4];
         str[i * 2 + 1] = hexArray[v & 0x0F];
     }
+    str[size * 2] = '\0';
 }
 
 ByteBuffer ByteBuffer::clone() {

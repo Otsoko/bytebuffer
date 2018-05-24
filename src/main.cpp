@@ -67,7 +67,7 @@ int main(int argc, char const *argv[]) {
     cout << endl;
 
     char *hex1 = bytebuffer.getHexString();
-    char  hex2[bytebuffer.getSize() * 2];
+    char  hex2[bytebuffer.getSize() * 2 + 1];
 
     bytebuffer.getHexString(hex2);
 
