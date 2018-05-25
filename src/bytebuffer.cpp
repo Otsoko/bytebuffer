@@ -1,11 +1,12 @@
 #include "bytebuffer.h"
-#include <iostream>
+#include <cmath>
 #include <stdlib.h>
 
 ByteBuffer::ByteBuffer(size_t size) {
     this->size = size;
     pos        = 0;
     buff       = (byte *) malloc(size * sizeof(byte));
+    ;
 }
 
 ByteBuffer::~ByteBuffer() {
@@ -32,6 +33,52 @@ byte ByteBuffer::getAt(int index) {
     return buff[index];
 }
 
+short ByteBuffer::getShort() {
+    byte b1 = buff[pos + 1];
+    byte b0 = buff[pos];
+
+    pos += 2;
+
+    return ((b1 & 0xFF) << 8) | (b0 & 0xFF);
+}
+
+short ByteBuffer::getShortAt(int index) {
+    byte b1 = buff[index + 1];
+    byte b0 = buff[index];
+
+    return ((b1 & 0xFF) << 8) | (b0 & 0xFF);
+}
+
+int ByteBuffer::getInt() {
+    byte b3 = buff[pos + 3];
+    byte b2 = buff[pos + 2];
+    byte b1 = buff[pos + 1];
+    byte b0 = buff[pos];
+
+    pos += 4;
+
+    return (b3 << 24) | ((b2 & 0xFF) << 16) | ((b1 & 0xFF) << 8) | (b0 & 0xFF);
+}
+
+int ByteBuffer::getIntAt(int index) {
+    byte b3 = buff[index + 3];
+    byte b2 = buff[index + 2];
+    byte b1 = buff[index + 1];
+    byte b0 = buff[index];
+
+    return (b3 << 24) | ((b2 & 0xFF) << 16) | ((b1 & 0xFF) << 8) | (b0 & 0xFF);
+}
+
+float ByteBuffer::getFloat() {
+    int i = getInt();
+    return intBitsToFloat(i);
+}
+
+float ByteBuffer::getFloatAt(int index) {
+    int i = getIntAt(index);
+    return intBitsToFloat(i);
+}
+
 void ByteBuffer::put(byte value) {
     buff[pos++] = value;
 }
@@ -40,64 +87,48 @@ void ByteBuffer::putAt(byte value, int index) {
     buff[index] = value;
 }
 
-short ByteBuffer::getShort() {
-    short s = *(short *) (buff + pos);
-    pos += sizeof(short);
-    return s;
-}
-
-short ByteBuffer::getShortAt(int index) {
-    short s = *(short *) (buff + index);
-    return s;
-}
-
 void ByteBuffer::putShort(short value) {
-    *(short *) (buff + pos) = value;
-    pos += sizeof(short);
+    buff[pos++] = value & 0xFF;
+    buff[pos++] = (value >> 8) & 0xFF;
 }
 
 void ByteBuffer::putShortAt(short value, int index) {
-    *(short *) (buff + index) = value;
-}
-
-int ByteBuffer::getInt() {
-    int i = *(int *) (buff + pos);
-    pos += sizeof(int);
-    return i;
-}
-
-int ByteBuffer::getIntAt(int index) {
-    int i = *(int *) (buff + index);
-    return i;
-}
-
-float ByteBuffer::getFloat() {
-    float f = *(float *) (buff + pos);
-    pos += sizeof(float);
-    return f;
-}
-
-float ByteBuffer::getFloatAt(int index) {
-    float f = *(float *) (buff + index);
-    return f;
+    buff[index++] = value & 0xFF;
+    buff[index++] = (value >> 8) & 0xFF;
 }
 
 void ByteBuffer::putInt(int value) {
-    *(int *) (buff + pos) = value;
-    pos += sizeof(int);
+    buff[pos++] = value & 0xFF;
+    buff[pos++] = (value >> 8) & 0xFF;
+    buff[pos++] = (value >> 16) & 0xFF;
+    buff[pos++] = (value >> 24) & 0xFF;
 }
 
 void ByteBuffer::putIntAt(int value, int index) {
-    *(int *) (buff + index) = value;
+    buff[index++] = value & 0xFF;
+    buff[index++] = (value >> 8) & 0xFF;
+    buff[index++] = (value >> 16) & 0xFF;
+    buff[index++] = (value >> 24) & 0xFF;
 }
 
 void ByteBuffer::putFloat(float value) {
-    *(float *) (buff + pos) = value;
-    pos += sizeof(float);
+    FloatB valueB;
+    valueB.value = value;
+
+    buff[pos++] = valueB.bytes[0];
+    buff[pos++] = valueB.bytes[1];
+    buff[pos++] = valueB.bytes[2];
+    buff[pos++] = valueB.bytes[3];
 }
 
 void ByteBuffer::putFloatAt(float value, int index) {
-    *(float *) (buff + index) = value;
+    FloatB valueB;
+    valueB.value = value;
+
+    buff[index++] = valueB.bytes[0];
+    buff[index++] = valueB.bytes[1];
+    buff[index++] = valueB.bytes[2];
+    buff[index++] = valueB.bytes[3];
 }
 
 char *ByteBuffer::getHexString() {
@@ -132,4 +163,24 @@ ByteBuffer ByteBuffer::clone() {
     }
 
     return cloned;
+}
+
+float ByteBuffer::intBitsToFloat(int value) {
+    FloatB valueB;
+
+    valueB.bytes[0] = value & 0xFF;
+    valueB.bytes[1] = (value >> 8) & 0xFF;
+    valueB.bytes[2] = (value >> 16) & 0xFF;
+    valueB.bytes[3] = (value >> 24) & 0xFF;
+
+    return valueB.value;
+}
+
+float ByteBuffer::intBitsToFloatPow(int value) {
+    int s = (value >> 31) == 0 ? 1 : -1;
+    int e = (value >> 23) & 0xFF;
+    int m =
+        (e == 0) ? ((value & 0x7FFFFF) << 1) : ((value & 0x7FFFFF) | 0x800000);
+
+    return s * m * pow(2, e - 150);
 }
