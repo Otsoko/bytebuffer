@@ -71,6 +71,17 @@ int ByteBuffer::getIntAt(int index) {
     return i;
 }
 
+float ByteBuffer::getFloat() {
+    float f = *(float *) (buff + pos);
+    pos += sizeof(float);
+    return f;
+}
+
+float ByteBuffer::getFloatAt(int index) {
+    float f = *(float *) (buff + index);
+    return f;
+}
+
 void ByteBuffer::putInt(int value) {
     *(int *) (buff + pos) = value;
     pos += sizeof(int);
@@ -78,6 +89,15 @@ void ByteBuffer::putInt(int value) {
 
 void ByteBuffer::putIntAt(int value, int index) {
     *(int *) (buff + index) = value;
+}
+
+void ByteBuffer::putFloat(float value) {
+    *(float *) (buff + pos) = value;
+    pos += sizeof(float);
+}
+
+void ByteBuffer::putFloatAt(float value, int index) {
+    *(float *) (buff + index) = value;
 }
 
 char *ByteBuffer::getHexString() {

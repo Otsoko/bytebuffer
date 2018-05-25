@@ -34,6 +34,10 @@ public:
 
     int getIntAt(int index);
 
+    float getFloat();
+
+    float getFloatAt(int index);
+
     void put(byte value);
 
     void putAt(byte value, int index);
@@ -45,6 +49,10 @@ public:
     void putInt(int value);
 
     void putIntAt(int value, int index);
+
+    void putFloat(float value);
+
+    void putFloatAt(float value, int index);
 
     char *getHexString();
 
