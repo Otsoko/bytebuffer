@@ -9,7 +9,6 @@ ByteBuffer::ByteBuffer(size_t size) {
 }
 
 ByteBuffer::~ByteBuffer() {
-    std::cout << "Liberando" << std::endl;
     free(buff);
 }
 
