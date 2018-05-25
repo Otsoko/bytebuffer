@@ -6,7 +6,6 @@ ByteBuffer::ByteBuffer(size_t size) {
     this->size = size;
     pos        = 0;
     buff       = (byte *) malloc(size * sizeof(byte));
-    ;
 }
 
 ByteBuffer::~ByteBuffer() {
