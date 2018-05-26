@@ -75,8 +75,7 @@ float ByteBuffer::getFloat() {
 }
 
 float ByteBuffer::getFloatAt(int index) {
-    int i = getIntAt(index);
-    return intBitsToFloat(i);
+    return intBitsToFloat(getIntAt(index));
 }
 
 Long ByteBuffer::getLong() {
