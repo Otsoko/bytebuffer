@@ -10,7 +10,7 @@ void printBB(ByteBuffer *byteBuffer);
 int main(int argc, char const *argv[]) {
 
     // Creamos el ByteBuffer con un tamaño de 9 bytes
-    ByteBuffer bytebuffer(13);
+    ByteBuffer bytebuffer(21);
 
     // Comprobamos que el tamaño es el que le hemos dado
     cout << "Tamaño del buffer: " << bytebuffer.getSize() << " bytes" << endl;
@@ -27,6 +27,10 @@ int main(int argc, char const *argv[]) {
     bytebuffer.putInt(123456);
     // Insertamos un float
     bytebuffer.putFloat(82.56f);
+    // Insertamos un long
+    bytebuffer.putLong(12345678ULL);
+
+    printBB(&bytebuffer);
 
     // Volvemos al principio del buffer para empezar a leer
     bytebuffer.reset();
@@ -43,9 +47,12 @@ int main(int argc, char const *argv[]) {
     int in = bytebuffer.getInt();
     // Leemos un float
     float f = bytebuffer.getFloat();
+    // Leemos un long
+    Long l = bytebuffer.getLong();
 
     cout << "Valores leídos: " << (int) b << ", " << (int) c << ", " << (int) d
-         << ", " << (int) s << ", " << (int) in << ", " << (float) f << endl;
+         << ", " << (int) s << ", " << (int) in << ", " << (float) f << ", "
+         << (Long) l << endl;
 
     // Insertamos un byte en la posición 2
     bytebuffer.putAt(44, 2);
@@ -67,6 +74,10 @@ int main(int argc, char const *argv[]) {
     bytebuffer.putFloatAt(123.45f, 2);
     // Leemos un float en la posición 2
     cout << (float) bytebuffer.getFloatAt(2) << endl;
+    // Insertamos un long en la posición 2
+    bytebuffer.putLongAt(789456123LL, 2);
+    // Leemos un long en la posición 2
+    cout << (Long) bytebuffer.getLongAt(2) << endl;
 
     byte *bytes = bytebuffer.getBytes();
     for (size_t i = 0; i < bytebuffer.getSize(); i++) {
@@ -90,6 +101,12 @@ int main(int argc, char const *argv[]) {
 
     // Mostramos el contenido del ByteBuffer copiado
     printBB(&cloned);
+
+    cout << endl
+         << "s(int): " << sizeof(int) << ", s(long): " << sizeof(long)
+         << ", s(long long): " << sizeof(long long)
+         << ", s(float): " << sizeof(float) << ", s(double): " << sizeof(double)
+         << ", s(u_int64_t): " << sizeof(u_int64_t) << endl;
 
     return 0;
 }

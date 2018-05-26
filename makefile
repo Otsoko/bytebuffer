@@ -1,5 +1,5 @@
-CC=g++
-CFLAGS=-Isrc -Wall -O3 -c
+CXX=g++
+CXXFLAGS=-Isrc -Wall -O3 -c
 OBJDIR=lib
 OBJ=$(OBJDIR)/main.o $(OBJDIR)/bytebuffer.o
 EXE=Bytebuffer
@@ -9,10 +9,10 @@ EXE=Bytebuffer
 all: $(EXE)
 
 Bytebuffer: $(OBJ)
-	$(CC) -o $@ $^
+	$(CXX) -o $@ $^
 
 $(OBJDIR)/%.o: src/%.cpp | $(OBJDIR)
-	$(CC) $(CFLAGS) $< -o $@
+	$(CXX) $(CXXFLAGS) $< -o $@
 
 $(OBJDIR):
 	mkdir -p $@

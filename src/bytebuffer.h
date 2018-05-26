@@ -4,6 +4,7 @@
 #include <cstddef>
 
 typedef unsigned char byte;
+typedef long long     Long;
 
 typedef union {
     float value;
@@ -32,15 +33,19 @@ public:
     int   getIntAt(int index);
     float getFloat();
     float getFloatAt(int index);
-
-    void put(byte value);
-    void putAt(byte value, int index);
-    void putShort(short value);
-    void putShortAt(short value, int index);
-    void putInt(int value);
-    void putIntAt(int value, int index);
-    void putFloat(float value);
-    void putFloatAt(float value, int index);
+    Long  getLong();
+    Long  getLongAt(int index);
+    
+    void  put(byte value);
+    void  putAt(byte value, int index);
+    void  putShort(short value);
+    void  putShortAt(short value, int index);
+    void  putInt(int value);
+    void  putIntAt(int value, int index);
+    void  putFloat(float value);
+    void  putFloatAt(float value, int index);
+    void  putLong(Long value);
+    void  putLongAt(Long value, int index);
 
     char *getHexString();
     void  getHexString(char *str);

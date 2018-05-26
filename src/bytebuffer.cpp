@@ -9,6 +9,8 @@ ByteBuffer::ByteBuffer(size_t size) {
 }
 
 ByteBuffer::~ByteBuffer() {
+    size = 0;
+    pos  = 0;
     free(buff);
 }
 
@@ -69,13 +71,50 @@ int ByteBuffer::getIntAt(int index) {
 }
 
 float ByteBuffer::getFloat() {
-    int i = getInt();
-    return intBitsToFloat(i);
+    return intBitsToFloat(getInt());
 }
 
 float ByteBuffer::getFloatAt(int index) {
     int i = getIntAt(index);
     return intBitsToFloat(i);
+}
+
+Long ByteBuffer::getLong() {
+    byte b7 = buff[pos + 7];
+    byte b6 = buff[pos + 6];
+    byte b5 = buff[pos + 5];
+    byte b4 = buff[pos + 4];
+    byte b3 = buff[pos + 3];
+    byte b2 = buff[pos + 2];
+    byte b1 = buff[pos + 1];
+    byte b0 = buff[pos];
+
+    pos += 8;
+
+    Long ll = (((Long) b7 & 0xFF) << 56) | (((Long) b6 & 0xFF) << 48) |
+              (((Long) b5 & 0xFF) << 40) | (((Long) b4 & 0xFF) << 32) |
+              (((Long) b3 & 0xFF) << 24) | (((Long) b2 & 0xFF) << 16) |
+              (((Long) b1 & 0xFF) << 8) | ((Long) b0 & 0xFF);
+
+    return ll;
+}
+
+Long ByteBuffer::getLongAt(int index) {
+    byte b7 = buff[index + 7];
+    byte b6 = buff[index + 6];
+    byte b5 = buff[index + 5];
+    byte b4 = buff[index + 4];
+    byte b3 = buff[index + 3];
+    byte b2 = buff[index + 2];
+    byte b1 = buff[index + 1];
+    byte b0 = buff[index];
+
+    Long ll = (((Long) b7 & 0xFF) << 56) | (((Long) b6 & 0xFF) << 48) |
+              (((Long) b5 & 0xFF) << 40) | (((Long) b4 & 0xFF) << 32) |
+              (((Long) b3 & 0xFF) << 24) | (((Long) b2 & 0xFF) << 16) |
+              (((Long) b1 & 0xFF) << 8) | ((Long) b0 & 0xFF);
+
+    return ll;
 }
 
 void ByteBuffer::put(byte value) {
@@ -93,7 +132,7 @@ void ByteBuffer::putShort(short value) {
 
 void ByteBuffer::putShortAt(short value, int index) {
     buff[index++] = value & 0xFF;
-    buff[index++] = (value >> 8) & 0xFF;
+    buff[index]   = (value >> 8) & 0xFF;
 }
 
 void ByteBuffer::putInt(int value) {
@@ -107,7 +146,7 @@ void ByteBuffer::putIntAt(int value, int index) {
     buff[index++] = value & 0xFF;
     buff[index++] = (value >> 8) & 0xFF;
     buff[index++] = (value >> 16) & 0xFF;
-    buff[index++] = (value >> 24) & 0xFF;
+    buff[index]   = (value >> 24) & 0xFF;
 }
 
 void ByteBuffer::putFloat(float value) {
@@ -127,7 +166,29 @@ void ByteBuffer::putFloatAt(float value, int index) {
     buff[index++] = valueB.bytes[0];
     buff[index++] = valueB.bytes[1];
     buff[index++] = valueB.bytes[2];
-    buff[index++] = valueB.bytes[3];
+    buff[index]   = valueB.bytes[3];
+}
+
+void ByteBuffer::putLong(Long value) {
+    buff[pos++] = value & 0xFF;
+    buff[pos++] = (value >> 8) & 0xFF;
+    buff[pos++] = (value >> 16) & 0xFF;
+    buff[pos++] = (value >> 24) & 0xFF;
+    buff[pos++] = (value >> 32) & 0xFF;
+    buff[pos++] = (value >> 40) & 0xFF;
+    buff[pos++] = (value >> 48) & 0xFF;
+    buff[pos++] = (value >> 56) & 0xFF;
+}
+
+void ByteBuffer::putLongAt(Long value, int index) {
+    buff[index++] = value & 0xFF;
+    buff[index++] = (value >> 8) & 0xFF;
+    buff[index++] = (value >> 16) & 0xFF;
+    buff[index++] = (value >> 24) & 0xFF;
+    buff[index++] = (value >> 32) & 0xFF;
+    buff[index++] = (value >> 40) & 0xFF;
+    buff[index++] = (value >> 48) & 0xFF;
+    buff[index]   = (value >> 56) & 0xFF;
 }
 
 char *ByteBuffer::getHexString() {
