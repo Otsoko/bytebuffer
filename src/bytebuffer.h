@@ -42,7 +42,9 @@ public:
     Long   getLongAt(int index);
     double getDouble();
     double getDoubleAt(int index);
-    
+    char * getString(int length);
+    char * getStringAt(int length, int index);
+
     void   put(byte value);
     void   putAt(byte value, int index);
     void   putShort(short value);
@@ -55,6 +57,8 @@ public:
     void   putLongAt(Long value, int index);
     void   putDouble(double value);
     void   putDoubleAt(double value, int index);
+    void   putString(const char *value, int length);
+    void   putStringAt(const char *value, int length, int index);
 
     char *getHexString();
     void  getHexString(char *str);

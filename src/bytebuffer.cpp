@@ -136,6 +136,26 @@ double ByteBuffer::getDoubleAt(int index) {
     return valueB.value;
 }
 
+char *ByteBuffer::getString(int length) {
+    char *str = (char *) malloc(length * sizeof(char));
+
+    for (int i = 0; i < length; i++) {
+        str[i] = buff[pos++];
+    }
+
+    return str;
+}
+
+char *ByteBuffer::getStringAt(int length, int index) {
+    char *str = (char *) malloc(length * sizeof(char));
+
+    for (int i = 0; i < length; i++) {
+        str[i] = buff[index++];
+    }
+
+    return str;
+}
+
 void ByteBuffer::put(byte value) {
     buff[pos++] = value;
 }
@@ -225,6 +245,18 @@ void ByteBuffer::putDoubleAt(double value, int index) {
 
     for (int i = 0; i < 8; i++) {
         buff[index++] = valueB.bytes[i];
+    }
+}
+
+void ByteBuffer::putString(const char *value, int length) {
+    for (int i = 0; i < length; i++) {
+        buff[pos++] = value[i];
+    }
+}
+
+void ByteBuffer::putStringAt(const char *value, int length, int index) {
+    for (int i = 0; i < length; i++) {
+        buff[index++] = value[i];
     }
 }
 

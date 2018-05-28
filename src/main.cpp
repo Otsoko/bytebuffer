@@ -10,7 +10,7 @@ void printBB(ByteBuffer *byteBuffer);
 int main(int argc, char const *argv[]) {
 
     // Creamos el ByteBuffer con un tamaño de 9 bytes
-    ByteBuffer bytebuffer(29);
+    ByteBuffer bytebuffer(35);
 
     // Comprobamos que el tamaño es el que le hemos dado
     cout << "Tamaño del buffer: " << bytebuffer.getSize() << " bytes" << endl;
@@ -31,6 +31,8 @@ int main(int argc, char const *argv[]) {
     bytebuffer.putLong(12345678ULL);
     // Insertamos un double
     bytebuffer.putDouble(125.12563);
+    // Insertamos una cadena
+    bytebuffer.putString("Kaixop", 6);
 
     printBB(&bytebuffer);
 
@@ -53,10 +55,14 @@ int main(int argc, char const *argv[]) {
     Long l = bytebuffer.getLong();
     // Leemos un double
     double d = bytebuffer.getDouble();
+    // Leemos una cadena
+    char *str = bytebuffer.getString(6);
 
     cout << fixed << "Valores leídos: " << (int) b1 << ", " << (int) b2 << ", "
          << (int) b3 << ", " << (int) s << ", " << (int) in << ", " << (float) f
-         << ", " << (Long) l << ", " << (double) d << endl;
+         << ", " << (Long) l << ", " << (double) d << ", " << str << endl;
+
+    free(str);
 
     // Insertamos un byte en la posición 2
     bytebuffer.putAt(44, 2);
@@ -86,6 +92,12 @@ int main(int argc, char const *argv[]) {
     bytebuffer.putDoubleAt(45678.456123, 2);
     // Leemos un double en la posición 2
     cout << fixed << bytebuffer.getDoubleAt(2) << endl;
+    // Insertamos una cadena en la posición 2
+    bytebuffer.putStringAt("Mundukorik politena", 19, 2);
+    // Leemos una cadena en la posición 2
+    str = bytebuffer.getStringAt(19, 2);
+    cout << str << endl;
+    free(str);
 
     byte *bytes = bytebuffer.getBytes();
     for (size_t i = 0; i < bytebuffer.getSize(); i++) {
