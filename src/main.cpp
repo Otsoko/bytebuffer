@@ -10,7 +10,7 @@ void printBB(ByteBuffer *byteBuffer);
 int main(int argc, char const *argv[]) {
 
     // Creamos el ByteBuffer con un tamaño de 9 bytes
-    ByteBuffer bytebuffer(21);
+    ByteBuffer bytebuffer(29);
 
     // Comprobamos que el tamaño es el que le hemos dado
     cout << "Tamaño del buffer: " << bytebuffer.getSize() << " bytes" << endl;
@@ -29,6 +29,8 @@ int main(int argc, char const *argv[]) {
     bytebuffer.putFloat(82.56f);
     // Insertamos un long
     bytebuffer.putLong(12345678ULL);
+    // Insertamos un double
+    bytebuffer.putDouble(125.12563);
 
     printBB(&bytebuffer);
 
@@ -36,11 +38,11 @@ int main(int argc, char const *argv[]) {
     bytebuffer.reset();
 
     // Leemos un byte
-    byte b = bytebuffer.get();
+    byte b1 = bytebuffer.get();
     // Leemos un byte
-    byte c = bytebuffer.get();
+    byte b2 = bytebuffer.get();
     // Leemos un byte
-    byte d = bytebuffer.get();
+    byte b3 = bytebuffer.get();
     // Leemos un short
     short s = bytebuffer.getShort();
     // Leemos un int
@@ -49,10 +51,12 @@ int main(int argc, char const *argv[]) {
     float f = bytebuffer.getFloat();
     // Leemos un long
     Long l = bytebuffer.getLong();
+    // Leemos un double
+    double d = bytebuffer.getDouble();
 
-    cout << "Valores leídos: " << (int) b << ", " << (int) c << ", " << (int) d
-         << ", " << (int) s << ", " << (int) in << ", " << (float) f << ", "
-         << (Long) l << endl;
+    cout << fixed << "Valores leídos: " << (int) b1 << ", " << (int) b2 << ", "
+         << (int) b3 << ", " << (int) s << ", " << (int) in << ", " << (float) f
+         << ", " << (Long) l << ", " << (double) d << endl;
 
     // Insertamos un byte en la posición 2
     bytebuffer.putAt(44, 2);
@@ -78,6 +82,10 @@ int main(int argc, char const *argv[]) {
     bytebuffer.putLongAt(789456123LL, 2);
     // Leemos un long en la posición 2
     cout << (Long) bytebuffer.getLongAt(2) << endl;
+    // Insertamos un double en la posición 2
+    bytebuffer.putDoubleAt(45678.456123, 2);
+    // Leemos un double en la posición 2
+    cout << fixed << bytebuffer.getDoubleAt(2) << endl;
 
     byte *bytes = bytebuffer.getBytes();
     for (size_t i = 0; i < bytebuffer.getSize(); i++) {

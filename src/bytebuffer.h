@@ -11,6 +11,11 @@ typedef union {
     byte  bytes[4];
 } FloatB;
 
+typedef union {
+    double value;
+    byte   bytes[8];
+} DoubleB;
+
 class ByteBuffer {
 
     byte * buff;
@@ -25,27 +30,31 @@ public:
     void   reset();
     byte * getBytes();
 
-    byte  get();
-    byte  getAt(int index);
-    short getShort();
-    short getShortAt(int index);
-    int   getInt();
-    int   getIntAt(int index);
-    float getFloat();
-    float getFloatAt(int index);
-    Long  getLong();
-    Long  getLongAt(int index);
+    byte   get();
+    byte   getAt(int index);
+    short  getShort();
+    short  getShortAt(int index);
+    int    getInt();
+    int    getIntAt(int index);
+    float  getFloat();
+    float  getFloatAt(int index);
+    Long   getLong();
+    Long   getLongAt(int index);
+    double getDouble();
+    double getDoubleAt(int index);
     
-    void  put(byte value);
-    void  putAt(byte value, int index);
-    void  putShort(short value);
-    void  putShortAt(short value, int index);
-    void  putInt(int value);
-    void  putIntAt(int value, int index);
-    void  putFloat(float value);
-    void  putFloatAt(float value, int index);
-    void  putLong(Long value);
-    void  putLongAt(Long value, int index);
+    void   put(byte value);
+    void   putAt(byte value, int index);
+    void   putShort(short value);
+    void   putShortAt(short value, int index);
+    void   putInt(int value);
+    void   putIntAt(int value, int index);
+    void   putFloat(float value);
+    void   putFloatAt(float value, int index);
+    void   putLong(Long value);
+    void   putLongAt(Long value, int index);
+    void   putDouble(double value);
+    void   putDoubleAt(double value, int index);
 
     char *getHexString();
     void  getHexString(char *str);

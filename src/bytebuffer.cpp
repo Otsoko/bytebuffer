@@ -116,6 +116,26 @@ Long ByteBuffer::getLongAt(int index) {
     return ll;
 }
 
+double ByteBuffer::getDouble() {
+    DoubleB valueB;
+
+    for (int i = 0; i < 8; i++) {
+        valueB.bytes[i] = buff[pos++];
+    }
+
+    return valueB.value;
+}
+
+double ByteBuffer::getDoubleAt(int index) {
+    DoubleB valueB;
+
+    for (int i = 0; i < 8; i++) {
+        valueB.bytes[i] = buff[index++];
+    }
+
+    return valueB.value;
+}
+
 void ByteBuffer::put(byte value) {
     buff[pos++] = value;
 }
@@ -188,6 +208,24 @@ void ByteBuffer::putLongAt(Long value, int index) {
     buff[index++] = (value >> 40) & 0xFF;
     buff[index++] = (value >> 48) & 0xFF;
     buff[index]   = (value >> 56) & 0xFF;
+}
+
+void ByteBuffer::putDouble(double value) {
+    DoubleB valueB;
+    valueB.value = value;
+
+    for (int i = 0; i < 8; i++) {
+        buff[pos++] = valueB.bytes[i];
+    }
+}
+
+void ByteBuffer::putDoubleAt(double value, int index) {
+    DoubleB valueB;
+    valueB.value = value;
+
+    for (int i = 0; i < 8; i++) {
+        buff[index++] = valueB.bytes[i];
+    }
 }
 
 char *ByteBuffer::getHexString() {
