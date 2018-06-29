@@ -24,6 +24,7 @@ class ByteBuffer {
 
 public:
     ByteBuffer(size_t size);
+    ByteBuffer(const char *hexstring);
     ~ByteBuffer();
 
     size_t getSize();

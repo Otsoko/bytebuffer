@@ -1,11 +1,29 @@
 #include "bytebuffer.h"
 #include <cmath>
+#include <cstdio>
+#include <iostream>
 #include <stdlib.h>
+#include <string.h>
 
 ByteBuffer::ByteBuffer(size_t size) {
     this->size = size;
     pos        = 0;
     buff       = (byte *) malloc(size * sizeof(byte));
+}
+
+ByteBuffer::ByteBuffer(const char *hexstring) {
+    size = strlen(hexstring) / 2;
+    pos  = 0;
+    buff = (byte *) malloc(size * sizeof(byte));
+    for (size_t i = 0; i < size * 2; i += 2) {
+        int  c = 0;
+        char cb[3];
+        cb[0] = *(hexstring + i);
+        cb[1] = hexstring[i + 1];
+        cb[2] = '\0';
+        sscanf(cb, "%x", &c);
+        buff[i / 2] = c;
+    }
 }
 
 ByteBuffer::~ByteBuffer() {

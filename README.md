@@ -59,4 +59,7 @@ free(hex);
 
 // Clone the ByteBuffer
 ByteBuffer cloned = bytebuffer.clone();
+
+// Create a ByteBuffer from a hex string
+ByteBuffer bbstr("A3B2F1");
 ```

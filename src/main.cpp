@@ -5,7 +5,8 @@
 
 using namespace std;
 
-void printBB(ByteBuffer *byteBuffer);
+void        printBB(ByteBuffer *byteBuffer);
+ByteBuffer *test(ByteBuffer *b);
 
 int main(int argc, char const *argv[]) {
 
@@ -128,6 +129,13 @@ int main(int argc, char const *argv[]) {
          << ", s(float): " << sizeof(float) << ", s(double): " << sizeof(double)
          << ", s(u_int64_t): " << sizeof(u_int64_t) << endl;
 
+    ByteBuffer *r = NULL;
+    r             = test(r);
+    printBB(r);
+
+    ByteBuffer bbstr("A3B2F1");
+    printBB(&bbstr);
+
     return 0;
 }
 
@@ -137,4 +145,10 @@ void printBB(ByteBuffer *byteBuffer) {
         cout << (int) byteBuffer->getAt(i) << " ";
     }
     cout << endl;
+}
+
+ByteBuffer *test(ByteBuffer *b) {
+    b = new ByteBuffer(1);
+    b->put(64);
+    return b;
 }
