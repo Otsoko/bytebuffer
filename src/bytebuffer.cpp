@@ -1,6 +1,7 @@
 #include "bytebuffer.h"
 #include <cmath>
 #include <cstdio>
+#include <iostream>
 #include <stdlib.h>
 #include <string.h>
 
@@ -8,12 +9,15 @@ ByteBuffer::ByteBuffer(size_t size) {
     this->size = size;
     pos        = 0;
     buff       = (byte *) malloc(size * sizeof(byte));
+    bigEndian  = false;
 }
 
 ByteBuffer::ByteBuffer(const char *hexstring) {
-    size = strlen(hexstring) / 2;
-    pos  = 0;
-    buff = (byte *) malloc(size * sizeof(byte));
+    size      = strlen(hexstring) / 2;
+    pos       = 0;
+    buff      = (byte *) malloc(size * sizeof(byte));
+    bigEndian = false;
+
     for (size_t i = 0; i < size * 2; i += 2) {
         int  c = 0;
         char cb[3];
@@ -43,6 +47,14 @@ byte *ByteBuffer::getBytes() {
     return buff;
 }
 
+void ByteBuffer::order(Order order) {
+    if (order == BB_BIG_ENDIAN) {
+        bigEndian = true;
+    } else {
+        bigEndian = false;
+    }
+}
+
 byte ByteBuffer::get() {
     return buff[pos++];
 }
@@ -52,6 +64,19 @@ byte ByteBuffer::getAt(int index) {
 }
 
 short ByteBuffer::getShort() {
+    short res = 0;
+    if (bigEndian) {
+        res = getShortB();
+    } else {
+        res = getShortL();
+    }
+
+    std::cout << "res: " << res << std::endl;
+
+    return res;
+}
+
+short ByteBuffer::getShortL() {
     byte b1 = buff[pos + 1];
     byte b0 = buff[pos];
 
@@ -60,9 +85,38 @@ short ByteBuffer::getShort() {
     return ((b1 & 0xFF) << 8) | (b0 & 0xFF);
 }
 
+short ByteBuffer::getShortB() {
+    byte b0 = buff[pos + 1];
+    byte b1 = buff[pos];
+
+    pos += 2;
+
+    return ((b1 & 0xFF) << 8) | (b0 & 0xFF);
+}
+
 short ByteBuffer::getShortAt(int index) {
+    short res = 0;
+    if (bigEndian) {
+        res = getShortBAt(index);
+    } else {
+        res = getShortLAt(index);
+    }
+
+    std::cout << "res: " << res << std::endl;
+
+    return res;
+}
+
+short ByteBuffer::getShortLAt(int index) {
     byte b1 = buff[index + 1];
     byte b0 = buff[index];
+
+    return ((b1 & 0xFF) << 8) | (b0 & 0xFF);
+}
+
+short ByteBuffer::getShortBAt(int index) {
+    byte b0 = buff[index + 1];
+    byte b1 = buff[index];
 
     return ((b1 & 0xFF) << 8) | (b0 & 0xFF);
 }

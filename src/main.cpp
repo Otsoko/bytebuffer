@@ -16,6 +16,8 @@ int main(int argc, char const *argv[]) {
     // Comprobamos que el tamaño es el que le hemos dado
     cout << "Tamaño del buffer: " << bytebuffer.getSize() << " bytes" << endl;
 
+    bytebuffer.order(BB_BIG_ENDIAN);
+
     // Insertamos un byte
     bytebuffer.put(64);
     // Insertamos un byte
