@@ -122,6 +122,16 @@ short ByteBuffer::getShortBAt(int index) {
 }
 
 int ByteBuffer::getInt() {
+    int res = 0;
+    if (bigEndian) {
+        res = getIntB();
+    } else {
+        res = getIntL();
+    }
+    return res;
+}
+
+int ByteBuffer::getIntL() {
     byte b3 = buff[pos + 3];
     byte b2 = buff[pos + 2];
     byte b1 = buff[pos + 1];
@@ -132,11 +142,41 @@ int ByteBuffer::getInt() {
     return (b3 << 24) | ((b2 & 0xFF) << 16) | ((b1 & 0xFF) << 8) | (b0 & 0xFF);
 }
 
+int ByteBuffer::getIntB() {
+    byte b0 = buff[pos + 3];
+    byte b1 = buff[pos + 2];
+    byte b2 = buff[pos + 1];
+    byte b3 = buff[pos];
+
+    pos += 4;
+
+    return (b3 << 24) | ((b2 & 0xFF) << 16) | ((b1 & 0xFF) << 8) | (b0 & 0xFF);
+}
+
 int ByteBuffer::getIntAt(int index) {
+    int res = 0;
+    if (bigEndian) {
+        res = getIntBAt(index);
+    } else {
+        res = getIntLAt(index);
+    }
+    return res;
+}
+
+int ByteBuffer::getIntLAt(int index) {
     byte b3 = buff[index + 3];
     byte b2 = buff[index + 2];
     byte b1 = buff[index + 1];
     byte b0 = buff[index];
+
+    return (b3 << 24) | ((b2 & 0xFF) << 16) | ((b1 & 0xFF) << 8) | (b0 & 0xFF);
+}
+
+int ByteBuffer::getIntBAt(int index) {
+    byte b0 = buff[index + 3];
+    byte b1 = buff[index + 2];
+    byte b2 = buff[index + 1];
+    byte b3 = buff[index];
 
     return (b3 << 24) | ((b2 & 0xFF) << 16) | ((b1 & 0xFF) << 8) | (b0 & 0xFF);
 }
@@ -272,17 +312,47 @@ void ByteBuffer::putShortBAt(short value, int index) {
 }
 
 void ByteBuffer::putInt(int value) {
+    if (bigEndian) {
+        putIntB(value);
+    } else {
+        putIntL(value);
+    }
+}
+
+void ByteBuffer::putIntL(int value) {
     buff[pos++] = value & 0xFF;
     buff[pos++] = (value >> 8) & 0xFF;
     buff[pos++] = (value >> 16) & 0xFF;
     buff[pos++] = (value >> 24) & 0xFF;
 }
 
+void ByteBuffer::putIntB(int value) {
+    buff[pos++] = (value >> 24) & 0xFF;
+    buff[pos++] = (value >> 16) & 0xFF;
+    buff[pos++] = (value >> 8) & 0xFF;
+    buff[pos++] = value & 0xFF;
+}
+
 void ByteBuffer::putIntAt(int value, int index) {
+    if (bigEndian) {
+        putIntBAt(value, index);
+    } else {
+        putIntLAt(value, index);
+    }
+}
+
+void ByteBuffer::putIntLAt(int value, int index) {
     buff[index++] = value & 0xFF;
     buff[index++] = (value >> 8) & 0xFF;
     buff[index++] = (value >> 16) & 0xFF;
     buff[index]   = (value >> 24) & 0xFF;
+}
+
+void ByteBuffer::putIntBAt(int value, int index) {
+    buff[index]   = (value >> 24) & 0xFF;
+    buff[index++] = (value >> 16) & 0xFF;
+    buff[index++] = (value >> 8) & 0xFF;
+    buff[index++] = value & 0xFF;
 }
 
 void ByteBuffer::putFloat(float value) {

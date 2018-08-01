@@ -83,6 +83,16 @@ private:
     void  putShortB(short value);
     void  putShortLAt(short value, int index);
     void  putShortBAt(short value, int index);
+
+    int   getIntL();
+    int   getIntB();
+    int   getIntLAt(int index);
+    int   getIntBAt(int index);
+
+    void  putIntL(int value);
+    void  putIntB(int value);
+    void  putIntLAt(int value, int index);
+    void  putIntBAt(int value, int index);
 };
 
 #endif
