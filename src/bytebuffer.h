@@ -16,10 +16,7 @@ typedef union {
     byte   bytes[8];
 } DoubleB;
 
-typedef enum {
-    BB_LITTLE_ENDIAN,
-    BB_BIG_ENDIAN
-} Order;
+typedef enum { BB_LITTLE_ENDIAN, BB_BIG_ENDIAN } Order;
 
 class ByteBuffer {
 
@@ -81,6 +78,11 @@ private:
     short getShortB();
     short getShortLAt(int index);
     short getShortBAt(int index);
+
+    void  putShortL(short value);
+    void  putShortB(short value);
+    void  putShortLAt(short value, int index);
+    void  putShortBAt(short value, int index);
 };
 
 #endif

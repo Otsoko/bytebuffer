@@ -236,13 +236,39 @@ void ByteBuffer::putAt(byte value, int index) {
 }
 
 void ByteBuffer::putShort(short value) {
+    if (bigEndian) {
+        putShortB(value);
+    } else {
+        putShortL(value);
+    }
+}
+
+void ByteBuffer::putShortL(short value) {
     buff[pos++] = value & 0xFF;
     buff[pos++] = (value >> 8) & 0xFF;
 }
 
+void ByteBuffer::putShortB(short value) {
+    buff[pos++] = (value >> 8) & 0xFF;
+    buff[pos++] = value & 0xFF;
+}
+
 void ByteBuffer::putShortAt(short value, int index) {
+    if (bigEndian) {
+        putShortBAt(value, index);
+    } else {
+        putShortLAt(value, index);
+    }
+}
+
+void ByteBuffer::putShortLAt(short value, int index) {
     buff[index++] = value & 0xFF;
     buff[index]   = (value >> 8) & 0xFF;
+}
+
+void ByteBuffer::putShortBAt(short value, int index) {
+    buff[index++] = (value >> 8) & 0xFF;
+    buff[index]   = value & 0xFF;
 }
 
 void ByteBuffer::putInt(int value) {
