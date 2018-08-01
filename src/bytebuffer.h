@@ -73,6 +73,7 @@ public:
 private:
     float intBitsToFloat(int value);
     float intBitsToFloatPow(int value);
+    bool isArchBigEndian(void);
 
     short getShortL();
     short getShortB();

@@ -104,6 +104,8 @@ short ByteBuffer::getShortAt(int index) {
 
     std::cout << "res: " << res << std::endl;
 
+    std::cout << "Machine is big endian: " << isArchBigEndian() << std::endl;
+
     return res;
 }
 
@@ -479,4 +481,13 @@ float ByteBuffer::intBitsToFloatPow(int value) {
         (e == 0) ? ((value & 0x7FFFFF) << 1) : ((value & 0x7FFFFF) | 0x800000);
 
     return s * m * pow(2, e - 150);
+}
+
+bool ByteBuffer::isArchBigEndian(void) {
+    union {
+        int  i;
+        char c[4];
+    } bigint = {0x01020304};
+
+    return bigint.c[0] == 1;
 }
