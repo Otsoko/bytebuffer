@@ -288,6 +288,16 @@ Long ByteBuffer::getLongBAt(int index) {
 }
 
 double ByteBuffer::getDouble() {
+    double res = 0.0;
+    if (bigEndian) {
+        res = getDoubleB();
+    } else {
+        res = getDoubleL();
+    }
+    return res;
+}
+
+double ByteBuffer::getDoubleL() {
     DoubleB valueB;
 
     for (int i = 0; i < 8; i++) {
@@ -297,10 +307,40 @@ double ByteBuffer::getDouble() {
     return valueB.value;
 }
 
+double ByteBuffer::getDoubleB() {
+    DoubleB valueB;
+
+    for (int i = 7; i >= 0; i--) {
+        valueB.bytes[i] = buff[pos++];
+    }
+
+    return valueB.value;
+}
+
 double ByteBuffer::getDoubleAt(int index) {
+    double res = 0.0;
+    if (bigEndian) {
+        res = getDoubleBAt(index);
+    } else {
+        res = getDoubleLAt(index);
+    }
+    return res;
+}
+
+double ByteBuffer::getDoubleLAt(int index) {
     DoubleB valueB;
 
     for (int i = 0; i < 8; i++) {
+        valueB.bytes[i] = buff[index++];
+    }
+
+    return valueB.value;
+}
+
+double ByteBuffer::getDoubleBAt(int index) {
+    DoubleB valueB;
+
+    for (int i = 7; i >= 0; i--) {
         valueB.bytes[i] = buff[index++];
     }
 
@@ -532,6 +572,14 @@ void ByteBuffer::putLongBAt(Long value, int index) {
 }
 
 void ByteBuffer::putDouble(double value) {
+    if (bigEndian) {
+        putDoubleB(value);
+    } else {
+        putDoubleL(value);
+    }
+}
+
+void ByteBuffer::putDoubleL(double value) {
     DoubleB valueB;
     valueB.value = value;
 
@@ -540,11 +588,37 @@ void ByteBuffer::putDouble(double value) {
     }
 }
 
+void ByteBuffer::putDoubleB(double value) {
+    DoubleB valueB;
+    valueB.value = value;
+
+    for (int i = 7; i >= 0; i--) {
+        buff[pos++] = valueB.bytes[i];
+    }
+}
+
 void ByteBuffer::putDoubleAt(double value, int index) {
+    if (bigEndian) {
+        putDoubleBAt(value, index);
+    } else {
+        putDoubleLAt(value, index);
+    }
+}
+
+void ByteBuffer::putDoubleLAt(double value, int index) {
     DoubleB valueB;
     valueB.value = value;
 
     for (int i = 0; i < 8; i++) {
+        buff[index++] = valueB.bytes[i];
+    }
+}
+
+void ByteBuffer::putDoubleBAt(double value, int index) {
+    DoubleB valueB;
+    valueB.value = value;
+
+    for (int i = 7; i >= 0; i--) {
         buff[index++] = valueB.bytes[i];
     }
 }
