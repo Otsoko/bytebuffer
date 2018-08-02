@@ -192,6 +192,16 @@ float ByteBuffer::getFloatAt(int index) {
 }
 
 Long ByteBuffer::getLong() {
+    Long res = 0LL;
+    if (bigEndian) {
+        res = getLongB();
+    } else {
+        res = getLongL();
+    }
+    return res;
+}
+
+Long ByteBuffer::getLongL() {
     byte b7 = buff[pos + 7];
     byte b6 = buff[pos + 6];
     byte b5 = buff[pos + 5];
@@ -211,7 +221,37 @@ Long ByteBuffer::getLong() {
     return ll;
 }
 
+Long ByteBuffer::getLongB() {
+    byte b0 = buff[pos + 7];
+    byte b1 = buff[pos + 6];
+    byte b2 = buff[pos + 5];
+    byte b3 = buff[pos + 4];
+    byte b4 = buff[pos + 3];
+    byte b5 = buff[pos + 2];
+    byte b6 = buff[pos + 1];
+    byte b7 = buff[pos];
+
+    pos += 8;
+
+    Long ll = (((Long) b7 & 0xFF) << 56) | (((Long) b6 & 0xFF) << 48) |
+              (((Long) b5 & 0xFF) << 40) | (((Long) b4 & 0xFF) << 32) |
+              (((Long) b3 & 0xFF) << 24) | (((Long) b2 & 0xFF) << 16) |
+              (((Long) b1 & 0xFF) << 8) | ((Long) b0 & 0xFF);
+
+    return ll;
+}
+
 Long ByteBuffer::getLongAt(int index) {
+    Long res = 0LL;
+    if (bigEndian) {
+        res = getLongBAt(index);
+    } else {
+        res = getLongLAt(index);
+    }
+    return res;
+}
+
+Long ByteBuffer::getLongLAt(int index) {
     byte b7 = buff[index + 7];
     byte b6 = buff[index + 6];
     byte b5 = buff[index + 5];
@@ -220,6 +260,24 @@ Long ByteBuffer::getLongAt(int index) {
     byte b2 = buff[index + 2];
     byte b1 = buff[index + 1];
     byte b0 = buff[index];
+
+    Long ll = (((Long) b7 & 0xFF) << 56) | (((Long) b6 & 0xFF) << 48) |
+              (((Long) b5 & 0xFF) << 40) | (((Long) b4 & 0xFF) << 32) |
+              (((Long) b3 & 0xFF) << 24) | (((Long) b2 & 0xFF) << 16) |
+              (((Long) b1 & 0xFF) << 8) | ((Long) b0 & 0xFF);
+
+    return ll;
+}
+
+Long ByteBuffer::getLongBAt(int index) {
+    byte b0 = buff[index + 7];
+    byte b1 = buff[index + 6];
+    byte b2 = buff[index + 5];
+    byte b3 = buff[index + 4];
+    byte b4 = buff[index + 3];
+    byte b5 = buff[index + 2];
+    byte b6 = buff[index + 1];
+    byte b7 = buff[index];
 
     Long ll = (((Long) b7 & 0xFF) << 56) | (((Long) b6 & 0xFF) << 48) |
               (((Long) b5 & 0xFF) << 40) | (((Long) b4 & 0xFF) << 32) |

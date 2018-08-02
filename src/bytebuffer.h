@@ -94,6 +94,11 @@ private:
     void  putIntB(int value);
     void  putIntLAt(int value, int index);
     void  putIntBAt(int value, int index);
+
+    Long  getLongL();
+    Long  getLongB();
+    Long  getLongLAt(int index);
+    Long  getLongBAt(int index);
 };
 
 #endif
