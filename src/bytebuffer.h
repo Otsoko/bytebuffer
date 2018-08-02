@@ -99,6 +99,11 @@ private:
     Long  getLongB();
     Long  getLongLAt(int index);
     Long  getLongBAt(int index);
+
+    void  putLongL(Long value);
+    void  putLongB(Long value);
+    void  putLongLAt(Long value, int index);
+    void  putLongBAt(Long value, int index);
 };
 
 #endif

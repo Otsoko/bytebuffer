@@ -436,6 +436,14 @@ void ByteBuffer::putFloatAt(float value, int index) {
 }
 
 void ByteBuffer::putLong(Long value) {
+    if (bigEndian) {
+        putLongB(value);
+    } else {
+        putLongL(value);
+    }
+}
+
+void ByteBuffer::putLongL(Long value) {
     buff[pos++] = value & 0xFF;
     buff[pos++] = (value >> 8) & 0xFF;
     buff[pos++] = (value >> 16) & 0xFF;
@@ -446,7 +454,26 @@ void ByteBuffer::putLong(Long value) {
     buff[pos++] = (value >> 56) & 0xFF;
 }
 
+void ByteBuffer::putLongB(Long value) {
+    buff[pos++] = (value >> 56) & 0xFF;
+    buff[pos++] = (value >> 48) & 0xFF;
+    buff[pos++] = (value >> 40) & 0xFF;
+    buff[pos++] = (value >> 32) & 0xFF;
+    buff[pos++] = (value >> 24) & 0xFF;
+    buff[pos++] = (value >> 16) & 0xFF;
+    buff[pos++] = (value >> 8) & 0xFF;
+    buff[pos++] = value & 0xFF;
+}
+
 void ByteBuffer::putLongAt(Long value, int index) {
+    if (bigEndian) {
+        putLongBAt(value, index);
+    } else {
+        putLongLAt(value, index);
+    }
+}
+
+void ByteBuffer::putLongLAt(Long value, int index) {
     buff[index++] = value & 0xFF;
     buff[index++] = (value >> 8) & 0xFF;
     buff[index++] = (value >> 16) & 0xFF;
@@ -455,6 +482,17 @@ void ByteBuffer::putLongAt(Long value, int index) {
     buff[index++] = (value >> 40) & 0xFF;
     buff[index++] = (value >> 48) & 0xFF;
     buff[index]   = (value >> 56) & 0xFF;
+}
+
+void ByteBuffer::putLongBAt(Long value, int index) {
+    buff[index++] = (value >> 56) & 0xFF;
+    buff[index++] = (value >> 48) & 0xFF;
+    buff[index++] = (value >> 40) & 0xFF;
+    buff[index++] = (value >> 32) & 0xFF;
+    buff[index++] = (value >> 24) & 0xFF;
+    buff[index++] = (value >> 16) & 0xFF;
+    buff[index++] = (value >> 8) & 0xFF;
+    buff[index++] = value & 0xFF;
 }
 
 void ByteBuffer::putDouble(double value) {
