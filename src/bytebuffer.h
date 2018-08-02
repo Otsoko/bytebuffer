@@ -119,6 +119,16 @@ private:
     void putDoubleB(double value);
     void putDoubleLAt(double value, int index);
     void putDoubleBAt(double value, int index);
+
+    char *getStringL(int length);
+    char *getStringB(int length);
+    char *getStringLAt(int length, int index);
+    char *getStringBAt(int length, int index);
+
+    void putStringL(const char *value, int length);
+    void putStringB(const char *value, int length);
+    void putStringLAt(const char *value, int length, int index);
+    void putStringBAt(const char *value, int length, int index);
 };
 
 #endif

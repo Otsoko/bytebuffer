@@ -348,6 +348,18 @@ double ByteBuffer::getDoubleBAt(int index) {
 }
 
 char *ByteBuffer::getString(int length) {
+    char *str = NULL;
+
+    if (bigEndian) {
+        str = getStringB(length);
+    } else {
+        str = getStringL(length);
+    }
+
+    return str;
+}
+
+char *ByteBuffer::getStringL(int length) {
     char *str = (char *) malloc(length * sizeof(char));
 
     for (int i = 0; i < length; i++) {
@@ -357,10 +369,42 @@ char *ByteBuffer::getString(int length) {
     return str;
 }
 
+char *ByteBuffer::getStringB(int length) {
+    char *str = (char *) malloc(length * sizeof(char));
+
+    for (int i = length - 1; i >= 0; i--) {
+        str[i] = buff[pos++];
+    }
+
+    return str;
+}
+
 char *ByteBuffer::getStringAt(int length, int index) {
+    char *str = NULL;
+
+    if (bigEndian) {
+        str = getStringBAt(length, index);
+    } else {
+        str = getStringLAt(length, index);
+    }
+
+    return str;
+}
+
+char *ByteBuffer::getStringLAt(int length, int index) {
     char *str = (char *) malloc(length * sizeof(char));
 
     for (int i = 0; i < length; i++) {
+        str[i] = buff[index++];
+    }
+
+    return str;
+}
+
+char *ByteBuffer::getStringBAt(int length, int index) {
+    char *str = (char *) malloc(length * sizeof(char));
+
+    for (int i = length - 1; i >= 0; i--) {
         str[i] = buff[index++];
     }
 
@@ -624,13 +668,41 @@ void ByteBuffer::putDoubleBAt(double value, int index) {
 }
 
 void ByteBuffer::putString(const char *value, int length) {
+    if (bigEndian) {
+        putStringB(value, length);
+    } else {
+        putStringL(value, length);
+    }
+}
+
+void ByteBuffer::putStringL(const char *value, int length) {
     for (int i = 0; i < length; i++) {
         buff[pos++] = value[i];
     }
 }
 
+void ByteBuffer::putStringB(const char *value, int length) {
+    for (int i = length - 1; i >= 0; i--) {
+        buff[pos++] = value[i];
+    }
+}
+
 void ByteBuffer::putStringAt(const char *value, int length, int index) {
+    if (bigEndian) {
+        putStringBAt(value, length, index);
+    } else {
+        putStringLAt(value, length, index);
+    }
+}
+
+void ByteBuffer::putStringLAt(const char *value, int length, int index) {
     for (int i = 0; i < length; i++) {
+        buff[index++] = value[i];
+    }
+}
+
+void ByteBuffer::putStringBAt(const char *value, int length, int index) {
+    for (int i = length - 1; i >= 0; i--) {
         buff[index++] = value[i];
     }
 }
