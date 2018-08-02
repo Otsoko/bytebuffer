@@ -10,6 +10,9 @@ ByteBuffer implementation on C++
 // Create a ByteBuffer of a given size in bytes
 ByteBuffer bytebuffer(33);
 
+// Select preferred byte order (BB_LITTLE_ENDIAN or BB_BIG_ENDIAN)
+bytebuffer.order(BB_LITTLE_ENDIAN);
+
 // Insert data at the current position
 bytebuffer.put(64);                 // 1 byte
 bytebuffer.putShort(256);           // 2 bytes
