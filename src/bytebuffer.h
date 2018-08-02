@@ -95,6 +95,11 @@ private:
     void  putIntLAt(int value, int index);
     void  putIntBAt(int value, int index);
 
+    void  putFloatL(float value);
+    void  putFloatB(float value);
+    void  putFloatLAt(float value, int index);
+    void  putFloatBAt(float value, int index);
+
     Long  getLongL();
     Long  getLongB();
     Long  getLongLAt(int index);

@@ -416,6 +416,14 @@ void ByteBuffer::putIntBAt(int value, int index) {
 }
 
 void ByteBuffer::putFloat(float value) {
+    if (bigEndian) {
+        putFloatB(value);
+    } else {
+        putFloatL(value);
+    }
+}
+
+void ByteBuffer::putFloatL(float value) {
     FloatB valueB;
     valueB.value = value;
 
@@ -425,7 +433,25 @@ void ByteBuffer::putFloat(float value) {
     buff[pos++] = valueB.bytes[3];
 }
 
+void ByteBuffer::putFloatB(float value) {
+    FloatB valueB;
+    valueB.value = value;
+
+    buff[pos++] = valueB.bytes[3];
+    buff[pos++] = valueB.bytes[2];
+    buff[pos++] = valueB.bytes[1];
+    buff[pos++] = valueB.bytes[0];
+}
+
 void ByteBuffer::putFloatAt(float value, int index) {
+    if (bigEndian) {
+        putFloatBAt(value, index);
+    } else {
+        putFloatLAt(value, index);
+    }
+}
+
+void ByteBuffer::putFloatLAt(float value, int index) {
     FloatB valueB;
     valueB.value = value;
 
@@ -433,6 +459,16 @@ void ByteBuffer::putFloatAt(float value, int index) {
     buff[index++] = valueB.bytes[1];
     buff[index++] = valueB.bytes[2];
     buff[index]   = valueB.bytes[3];
+}
+
+void ByteBuffer::putFloatBAt(float value, int index) {
+    FloatB valueB;
+    valueB.value = value;
+
+    buff[index++] = valueB.bytes[3];
+    buff[index++] = valueB.bytes[2];
+    buff[index++] = valueB.bytes[1];
+    buff[index]   = valueB.bytes[0];
 }
 
 void ByteBuffer::putLong(Long value) {
