@@ -493,10 +493,10 @@ void ByteBuffer::putIntLAt(int value, int index) {
 }
 
 void ByteBuffer::putIntBAt(int value, int index) {
-    buff[index]   = (value >> 24) & 0xFF;
+    buff[index++]   = (value >> 24) & 0xFF;
     buff[index++] = (value >> 16) & 0xFF;
     buff[index++] = (value >> 8) & 0xFF;
-    buff[index++] = value & 0xFF;
+    buff[index] = value & 0xFF;
 }
 
 void ByteBuffer::putFloat(float value) {
