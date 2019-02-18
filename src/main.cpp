@@ -11,7 +11,7 @@ ByteBuffer *test(ByteBuffer *b);
 int main(int argc, char const *argv[]) {
 
     // Creamos el ByteBuffer con un tamaño de 9 bytes
-    ByteBuffer bytebuffer(35);
+    ByteBuffer bytebuffer(37);
 
     // Comprobamos que el tamaño es el que le hemos dado
     cout << "Tamaño del buffer: " << bytebuffer.getSize() << " bytes" << endl;
@@ -123,6 +123,13 @@ int main(int argc, char const *argv[]) {
     ByteBuffer cloned = bytebuffer.clone();
 
     // Mostramos el contenido del ByteBuffer copiado
+    printBB(&bytebuffer);
+    printBB(&cloned);
+
+    bytebuffer.putShort(123);
+    cloned.putShort(123);
+
+    printBB(&bytebuffer);
     printBB(&cloned);
 
     cout << endl
