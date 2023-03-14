@@ -1,5 +1,5 @@
 # ByteBuffer #
-ByteBuffer implementation on C++
+ByteBuffer implementation in C++
 
 - `byte` type is `typedef unsigned char byte` (1 byte)
 - `Long` type is `typedef long long Long` (8 bytes)
