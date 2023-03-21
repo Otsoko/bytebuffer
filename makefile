@@ -1,8 +1,15 @@
 CXX=g++
+AR=ar
+RL=ranlib
+CP=cp -r
+
 CXXFLAGS=-Isrc -Wall -O3 -c
 LXXFLAGS= -Llib -lbytebuffer
+
 OBJDIR=obj
 LIBDIR=lib
+SRCDIR=src
+
 OBJ=$(OBJDIR)/main.o $(OBJDIR)/bytebuffer.o
 LIB=$(LIBDIR)/libbytebuffer.a
 EXE=Bytebuffer
@@ -17,9 +24,12 @@ Bytebuffer: $(LIB) $(OBJ)
 target: $(LIB)
 
 $(LIBDIR)/%.a: $(OBJ) | $(LIBDIR)
-	ar rvs $@ $(OBJDIR)/bytebuffer.o
+	$(AR) rf $@ $(OBJDIR)/bytebuffer.o
+	$(RL) $@
+	$(CP) -f $(SRCDIR)/bytebuffer.h $(LIBDIR)
 
-$(OBJDIR)/%.o: src/%.cpp | $(OBJDIR)
+
+$(OBJDIR)/%.o: $(SRCDIR)/%.cpp | $(OBJDIR)
 	$(CXX) $(CXXFLAGS) $< -o $@
 
 $(OBJDIR):
