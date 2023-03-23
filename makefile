@@ -28,7 +28,6 @@ $(LIBDIR)/%.a: $(OBJ) | $(LIBDIR)
 	$(RL) $@
 	$(CP) -f $(SRCDIR)/bytebuffer.h $(LIBDIR)
 
-
 $(OBJDIR)/%.o: $(SRCDIR)/%.cpp | $(OBJDIR)
 	$(CXX) $(CXXFLAGS) $< -o $@
 

@@ -6,6 +6,12 @@
 void        printBB(ByteBuffer *byteBuffer);
 ByteBuffer *test(ByteBuffer *b);
 
+void printHex(ByteBuffer *buffer) {
+    char *hex = buffer->getHexString();
+    printf("%s\n", hex);
+    free(hex);
+}
+
 int main(int argc, char const *argv[]) {
 
     // Creamos el ByteBuffer con un tamaño de 9 bytes
@@ -60,8 +66,8 @@ int main(int argc, char const *argv[]) {
     char *str = bytebuffer.getString(6);
 
     std::cout << std::fixed << "Valores leídos: " << (int) b1 << ", " << (int) b2 << ", "
-         << (int) b3 << ", " << (int) s << ", " << (int) in << ", " << (float) f
-         << ", " << (Long) l << ", " << (double) d << ", " << str << std::endl;
+              << (int) b3 << ", " << (int) s << ", " << (int) in << ", " << (float) f
+              << ", " << (Long) l << ", " << (double) d << ", " << str << std::endl;
 
     free(str);
 
@@ -131,10 +137,10 @@ int main(int argc, char const *argv[]) {
     printBB(&cloned);
 
     std::cout << std::endl
-         << "s(int): " << sizeof(int) << ", s(long): " << sizeof(long)
-         << ", s(long long): " << sizeof(long long)
-         << ", s(float): " << sizeof(float) << ", s(double): " << sizeof(double)
-         << ", s(u_int64_t): " << sizeof(u_int64_t) << std::endl;
+              << "s(int): " << sizeof(int) << ", s(long): " << sizeof(long)
+              << ", s(long long): " << sizeof(long long)
+              << ", s(float): " << sizeof(float) << ", s(double): " << sizeof(double)
+              << ", s(u_int64_t): " << sizeof(uint64_t) << std::endl;
 
     ByteBuffer *r = NULL;
     r             = test(r);

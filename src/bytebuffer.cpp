@@ -708,7 +708,7 @@ void ByteBuffer::putStringBAt(const char *value, int length, int index) {
 }
 
 char *ByteBuffer::getHexString() {
-    char *str        = (char *) malloc(2 * size * sizeof(char));
+    char *str        = (char *) malloc(2 * size * sizeof(char) + 1);
     char  hexArray[] = "0123456789ABCDEF";
 
     for (size_t i = 0; i < size; i++) {
@@ -716,6 +716,7 @@ char *ByteBuffer::getHexString() {
         str[i * 2]     = hexArray[v >> 4];
         str[i * 2 + 1] = hexArray[v & 0x0F];
     }
+    str[size * 2] = '\0';
 
     return str;
 }
