@@ -1,5 +1,5 @@
-# ByteBuffer #
-ByteBuffer implementation in C++
+# BBuffer #
+BBuffer implementation in C++
 
 - `byte` type is `typedef unsigned char byte` (1 byte)
 - `Long` type is `typedef long long Long` (8 bytes)
@@ -7,8 +7,8 @@ ByteBuffer implementation in C++
 ## How to use ##
 
 ```c++
-// Create a ByteBuffer of a given size in bytes
-ByteBuffer bytebuffer(33);
+// Create a BBuffer of a given size in bytes
+BBuffer bytebuffer(33);
 
 // Select preferred byte order (BB_LITTLE_ENDIAN or BB_BIG_ENDIAN)
 bytebuffer.order(BB_LITTLE_ENDIAN);
@@ -60,9 +60,9 @@ char *hex = bytebuffer.getHexString();
 std::cout << "HexString: " << hex << std::endl;
 free(hex);
 
-// Clone the ByteBuffer
-ByteBuffer cloned = bytebuffer.clone();
+// Clone the BBuffer
+BBuffer cloned = bytebuffer.clone();
 
-// Create a ByteBuffer from a hex string
-ByteBuffer bbstr("A3B2F1");
+// Create a BBuffer from a hex string
+BBuffer bbstr("A3B2F1");
 ```

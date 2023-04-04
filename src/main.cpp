@@ -1,12 +1,12 @@
-#include "bytebuffer.h"
+#include "bbuffer.h"
 #include <cstddef>
 #include <iostream>
 #include <stdlib.h>
 
-void        printBB(ByteBuffer *byteBuffer);
-ByteBuffer *test(ByteBuffer *b);
+void        printBB(BBuffer *byteBuffer);
+BBuffer *test(BBuffer *b);
 
-void printHex(ByteBuffer *buffer) {
+void printHex(BBuffer *buffer) {
     char *hex = buffer->getHexString();
     printf("%s\n", hex);
     free(hex);
@@ -14,8 +14,8 @@ void printHex(ByteBuffer *buffer) {
 
 int main(int argc, char const *argv[]) {
 
-    // Creamos el ByteBuffer con un tamaño de 9 bytes
-    ByteBuffer bytebuffer(37);
+    // Creamos el BBuffer con un tamaño de 9 bytes
+    BBuffer bytebuffer(37);
 
     // Comprobamos que el tamaño es el que le hemos dado
     std::cout << "Tamaño del buffer: " << bytebuffer.getSize() << " bytes" << std::endl;
@@ -74,7 +74,7 @@ int main(int argc, char const *argv[]) {
     // Insertamos un byte en la posición 2
     bytebuffer.putAt(44, 2);
 
-    // Mostramos el contenido del ByteBuffer
+    // Mostramos el contenido del BBuffer
     printBB(&bytebuffer);
 
     // Insertamos un short en la posición 2
@@ -123,10 +123,10 @@ int main(int argc, char const *argv[]) {
     // Liberar el devuelto
     free(hex1);
 
-    // Creamos una copia del ByteBuffer
-    ByteBuffer cloned = bytebuffer.clone();
+    // Creamos una copia del BBuffer
+    BBuffer cloned = bytebuffer.clone();
 
-    // Mostramos el contenido del ByteBuffer copiado
+    // Mostramos el contenido del BBuffer copiado
     printBB(&bytebuffer);
     printBB(&cloned);
 
@@ -142,26 +142,26 @@ int main(int argc, char const *argv[]) {
               << ", s(float): " << sizeof(float) << ", s(double): " << sizeof(double)
               << ", s(u_int64_t): " << sizeof(uint64_t) << std::endl;
 
-    ByteBuffer *r = NULL;
+    BBuffer *r = NULL;
     r             = test(r);
     printBB(r);
 
-    ByteBuffer bbstr("A3B2F1");
+    BBuffer bbstr("A3B2F1");
     printBB(&bbstr);
 
     return 0;
 }
 
-void printBB(ByteBuffer *byteBuffer) {
-    // Mostramos el contenido del ByteBuffer
+void printBB(BBuffer *byteBuffer) {
+    // Mostramos el contenido del BBuffer
     for (size_t i = 0; i < byteBuffer->getSize(); i++) {
         std::cout << (int) byteBuffer->getAt(i) << " ";
     }
     std::cout << std::endl;
 }
 
-ByteBuffer *test(ByteBuffer *b) {
-    b = new ByteBuffer(1);
+BBuffer *test(BBuffer *b) {
+    b = new BBuffer(1);
     b->put(64);
     return b;
 }

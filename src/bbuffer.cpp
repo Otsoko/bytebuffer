@@ -1,18 +1,18 @@
-#include "bytebuffer.h"
+#include "bbuffer.h"
 #include <cmath>
 #include <cstdio>
 #include <iostream>
 #include <stdlib.h>
 #include <string.h>
 
-ByteBuffer::ByteBuffer(size_t size) {
+BBuffer::BBuffer(size_t size) {
     this->size = size;
     pos        = 0;
     buff       = (byte *) malloc(size * sizeof(byte));
     bigEndian  = false;
 }
 
-ByteBuffer::ByteBuffer(const char *hexstring) {
+BBuffer::BBuffer(const char *hexstring) {
     size      = strlen(hexstring) / 2;
     pos       = 0;
     buff      = (byte *) malloc(size * sizeof(byte));
@@ -29,25 +29,25 @@ ByteBuffer::ByteBuffer(const char *hexstring) {
     }
 }
 
-ByteBuffer::~ByteBuffer() {
+BBuffer::~BBuffer() {
     size = 0;
     pos  = 0;
     free(buff);
 }
 
-size_t ByteBuffer::getSize() {
+size_t BBuffer::getSize() {
     return size;
 }
 
-void ByteBuffer::reset() {
+void BBuffer::reset() {
     pos = 0;
 }
 
-byte *ByteBuffer::getBytes() {
+byte *BBuffer::getBytes() {
     return buff;
 }
 
-void ByteBuffer::order(Order order) {
+void BBuffer::order(Order order) {
     if (order == BB_BIG_ENDIAN) {
         bigEndian = true;
     } else {
@@ -55,15 +55,15 @@ void ByteBuffer::order(Order order) {
     }
 }
 
-byte ByteBuffer::get() {
+byte BBuffer::get() {
     return buff[pos++];
 }
 
-byte ByteBuffer::getAt(int index) {
+byte BBuffer::getAt(int index) {
     return buff[index];
 }
 
-short ByteBuffer::getShort() {
+short BBuffer::getShort() {
     short res = 0;
     if (bigEndian) {
         res = getShortB();
@@ -76,7 +76,7 @@ short ByteBuffer::getShort() {
     return res;
 }
 
-short ByteBuffer::getShortL() {
+short BBuffer::getShortL() {
     byte b1 = buff[pos + 1];
     byte b0 = buff[pos];
 
@@ -85,7 +85,7 @@ short ByteBuffer::getShortL() {
     return ((b1 & 0xFF) << 8) | (b0 & 0xFF);
 }
 
-short ByteBuffer::getShortB() {
+short BBuffer::getShortB() {
     byte b0 = buff[pos + 1];
     byte b1 = buff[pos];
 
@@ -94,7 +94,7 @@ short ByteBuffer::getShortB() {
     return ((b1 & 0xFF) << 8) | (b0 & 0xFF);
 }
 
-short ByteBuffer::getShortAt(int index) {
+short BBuffer::getShortAt(int index) {
     short res = 0;
     if (bigEndian) {
         res = getShortBAt(index);
@@ -109,21 +109,21 @@ short ByteBuffer::getShortAt(int index) {
     return res;
 }
 
-short ByteBuffer::getShortLAt(int index) {
+short BBuffer::getShortLAt(int index) {
     byte b1 = buff[index + 1];
     byte b0 = buff[index];
 
     return ((b1 & 0xFF) << 8) | (b0 & 0xFF);
 }
 
-short ByteBuffer::getShortBAt(int index) {
+short BBuffer::getShortBAt(int index) {
     byte b0 = buff[index + 1];
     byte b1 = buff[index];
 
     return ((b1 & 0xFF) << 8) | (b0 & 0xFF);
 }
 
-int ByteBuffer::getInt() {
+int BBuffer::getInt() {
     int res = 0;
     if (bigEndian) {
         res = getIntB();
@@ -133,7 +133,7 @@ int ByteBuffer::getInt() {
     return res;
 }
 
-int ByteBuffer::getIntL() {
+int BBuffer::getIntL() {
     byte b3 = buff[pos + 3];
     byte b2 = buff[pos + 2];
     byte b1 = buff[pos + 1];
@@ -144,7 +144,7 @@ int ByteBuffer::getIntL() {
     return (b3 << 24) | ((b2 & 0xFF) << 16) | ((b1 & 0xFF) << 8) | (b0 & 0xFF);
 }
 
-int ByteBuffer::getIntB() {
+int BBuffer::getIntB() {
     byte b0 = buff[pos + 3];
     byte b1 = buff[pos + 2];
     byte b2 = buff[pos + 1];
@@ -155,7 +155,7 @@ int ByteBuffer::getIntB() {
     return (b3 << 24) | ((b2 & 0xFF) << 16) | ((b1 & 0xFF) << 8) | (b0 & 0xFF);
 }
 
-int ByteBuffer::getIntAt(int index) {
+int BBuffer::getIntAt(int index) {
     int res = 0;
     if (bigEndian) {
         res = getIntBAt(index);
@@ -165,7 +165,7 @@ int ByteBuffer::getIntAt(int index) {
     return res;
 }
 
-int ByteBuffer::getIntLAt(int index) {
+int BBuffer::getIntLAt(int index) {
     byte b3 = buff[index + 3];
     byte b2 = buff[index + 2];
     byte b1 = buff[index + 1];
@@ -174,7 +174,7 @@ int ByteBuffer::getIntLAt(int index) {
     return (b3 << 24) | ((b2 & 0xFF) << 16) | ((b1 & 0xFF) << 8) | (b0 & 0xFF);
 }
 
-int ByteBuffer::getIntBAt(int index) {
+int BBuffer::getIntBAt(int index) {
     byte b0 = buff[index + 3];
     byte b1 = buff[index + 2];
     byte b2 = buff[index + 1];
@@ -183,15 +183,15 @@ int ByteBuffer::getIntBAt(int index) {
     return (b3 << 24) | ((b2 & 0xFF) << 16) | ((b1 & 0xFF) << 8) | (b0 & 0xFF);
 }
 
-float ByteBuffer::getFloat() {
+float BBuffer::getFloat() {
     return intBitsToFloat(getInt());
 }
 
-float ByteBuffer::getFloatAt(int index) {
+float BBuffer::getFloatAt(int index) {
     return intBitsToFloat(getIntAt(index));
 }
 
-Long ByteBuffer::getLong() {
+Long BBuffer::getLong() {
     Long res = 0LL;
     if (bigEndian) {
         res = getLongB();
@@ -201,7 +201,7 @@ Long ByteBuffer::getLong() {
     return res;
 }
 
-Long ByteBuffer::getLongL() {
+Long BBuffer::getLongL() {
     byte b7 = buff[pos + 7];
     byte b6 = buff[pos + 6];
     byte b5 = buff[pos + 5];
@@ -221,7 +221,7 @@ Long ByteBuffer::getLongL() {
     return ll;
 }
 
-Long ByteBuffer::getLongB() {
+Long BBuffer::getLongB() {
     byte b0 = buff[pos + 7];
     byte b1 = buff[pos + 6];
     byte b2 = buff[pos + 5];
@@ -241,7 +241,7 @@ Long ByteBuffer::getLongB() {
     return ll;
 }
 
-Long ByteBuffer::getLongAt(int index) {
+Long BBuffer::getLongAt(int index) {
     Long res = 0LL;
     if (bigEndian) {
         res = getLongBAt(index);
@@ -251,7 +251,7 @@ Long ByteBuffer::getLongAt(int index) {
     return res;
 }
 
-Long ByteBuffer::getLongLAt(int index) {
+Long BBuffer::getLongLAt(int index) {
     byte b7 = buff[index + 7];
     byte b6 = buff[index + 6];
     byte b5 = buff[index + 5];
@@ -269,7 +269,7 @@ Long ByteBuffer::getLongLAt(int index) {
     return ll;
 }
 
-Long ByteBuffer::getLongBAt(int index) {
+Long BBuffer::getLongBAt(int index) {
     byte b0 = buff[index + 7];
     byte b1 = buff[index + 6];
     byte b2 = buff[index + 5];
@@ -287,7 +287,7 @@ Long ByteBuffer::getLongBAt(int index) {
     return ll;
 }
 
-double ByteBuffer::getDouble() {
+double BBuffer::getDouble() {
     double res = 0.0;
     if (bigEndian) {
         res = getDoubleB();
@@ -297,7 +297,7 @@ double ByteBuffer::getDouble() {
     return res;
 }
 
-double ByteBuffer::getDoubleL() {
+double BBuffer::getDoubleL() {
     DoubleB valueB;
 
     for (int i = 0; i < 8; i++) {
@@ -307,7 +307,7 @@ double ByteBuffer::getDoubleL() {
     return valueB.value;
 }
 
-double ByteBuffer::getDoubleB() {
+double BBuffer::getDoubleB() {
     DoubleB valueB;
 
     for (int i = 7; i >= 0; i--) {
@@ -317,7 +317,7 @@ double ByteBuffer::getDoubleB() {
     return valueB.value;
 }
 
-double ByteBuffer::getDoubleAt(int index) {
+double BBuffer::getDoubleAt(int index) {
     double res = 0.0;
     if (bigEndian) {
         res = getDoubleBAt(index);
@@ -327,7 +327,7 @@ double ByteBuffer::getDoubleAt(int index) {
     return res;
 }
 
-double ByteBuffer::getDoubleLAt(int index) {
+double BBuffer::getDoubleLAt(int index) {
     DoubleB valueB;
 
     for (int i = 0; i < 8; i++) {
@@ -337,7 +337,7 @@ double ByteBuffer::getDoubleLAt(int index) {
     return valueB.value;
 }
 
-double ByteBuffer::getDoubleBAt(int index) {
+double BBuffer::getDoubleBAt(int index) {
     DoubleB valueB;
 
     for (int i = 7; i >= 0; i--) {
@@ -347,7 +347,7 @@ double ByteBuffer::getDoubleBAt(int index) {
     return valueB.value;
 }
 
-char *ByteBuffer::getString(int length) {
+char *BBuffer::getString(int length) {
     char *str = NULL;
 
     if (bigEndian) {
@@ -359,7 +359,7 @@ char *ByteBuffer::getString(int length) {
     return str;
 }
 
-char *ByteBuffer::getStringL(int length) {
+char *BBuffer::getStringL(int length) {
     char *str = (char *) malloc(length * sizeof(char));
 
     for (int i = 0; i < length; i++) {
@@ -369,7 +369,7 @@ char *ByteBuffer::getStringL(int length) {
     return str;
 }
 
-char *ByteBuffer::getStringB(int length) {
+char *BBuffer::getStringB(int length) {
     char *str = (char *) malloc(length * sizeof(char));
 
     for (int i = length - 1; i >= 0; i--) {
@@ -379,7 +379,7 @@ char *ByteBuffer::getStringB(int length) {
     return str;
 }
 
-char *ByteBuffer::getStringAt(int length, int index) {
+char *BBuffer::getStringAt(int length, int index) {
     char *str = NULL;
 
     if (bigEndian) {
@@ -391,7 +391,7 @@ char *ByteBuffer::getStringAt(int length, int index) {
     return str;
 }
 
-char *ByteBuffer::getStringLAt(int length, int index) {
+char *BBuffer::getStringLAt(int length, int index) {
     char *str = (char *) malloc(length * sizeof(char));
 
     for (int i = 0; i < length; i++) {
@@ -401,7 +401,7 @@ char *ByteBuffer::getStringLAt(int length, int index) {
     return str;
 }
 
-char *ByteBuffer::getStringBAt(int length, int index) {
+char *BBuffer::getStringBAt(int length, int index) {
     char *str = (char *) malloc(length * sizeof(char));
 
     for (int i = length - 1; i >= 0; i--) {
@@ -411,15 +411,15 @@ char *ByteBuffer::getStringBAt(int length, int index) {
     return str;
 }
 
-void ByteBuffer::put(byte value) {
+void BBuffer::put(byte value) {
     buff[pos++] = value;
 }
 
-void ByteBuffer::putAt(byte value, int index) {
+void BBuffer::putAt(byte value, int index) {
     buff[index] = value;
 }
 
-void ByteBuffer::putShort(short value) {
+void BBuffer::putShort(short value) {
     if (bigEndian) {
         putShortB(value);
     } else {
@@ -427,17 +427,17 @@ void ByteBuffer::putShort(short value) {
     }
 }
 
-void ByteBuffer::putShortL(short value) {
+void BBuffer::putShortL(short value) {
     buff[pos++] = value & 0xFF;
     buff[pos++] = (value >> 8) & 0xFF;
 }
 
-void ByteBuffer::putShortB(short value) {
+void BBuffer::putShortB(short value) {
     buff[pos++] = (value >> 8) & 0xFF;
     buff[pos++] = value & 0xFF;
 }
 
-void ByteBuffer::putShortAt(short value, int index) {
+void BBuffer::putShortAt(short value, int index) {
     if (bigEndian) {
         putShortBAt(value, index);
     } else {
@@ -445,17 +445,17 @@ void ByteBuffer::putShortAt(short value, int index) {
     }
 }
 
-void ByteBuffer::putShortLAt(short value, int index) {
+void BBuffer::putShortLAt(short value, int index) {
     buff[index++] = value & 0xFF;
     buff[index]   = (value >> 8) & 0xFF;
 }
 
-void ByteBuffer::putShortBAt(short value, int index) {
+void BBuffer::putShortBAt(short value, int index) {
     buff[index++] = (value >> 8) & 0xFF;
     buff[index]   = value & 0xFF;
 }
 
-void ByteBuffer::putInt(int value) {
+void BBuffer::putInt(int value) {
     if (bigEndian) {
         putIntB(value);
     } else {
@@ -463,21 +463,21 @@ void ByteBuffer::putInt(int value) {
     }
 }
 
-void ByteBuffer::putIntL(int value) {
+void BBuffer::putIntL(int value) {
     buff[pos++] = value & 0xFF;
     buff[pos++] = (value >> 8) & 0xFF;
     buff[pos++] = (value >> 16) & 0xFF;
     buff[pos++] = (value >> 24) & 0xFF;
 }
 
-void ByteBuffer::putIntB(int value) {
+void BBuffer::putIntB(int value) {
     buff[pos++] = (value >> 24) & 0xFF;
     buff[pos++] = (value >> 16) & 0xFF;
     buff[pos++] = (value >> 8) & 0xFF;
     buff[pos++] = value & 0xFF;
 }
 
-void ByteBuffer::putIntAt(int value, int index) {
+void BBuffer::putIntAt(int value, int index) {
     if (bigEndian) {
         putIntBAt(value, index);
     } else {
@@ -485,21 +485,21 @@ void ByteBuffer::putIntAt(int value, int index) {
     }
 }
 
-void ByteBuffer::putIntLAt(int value, int index) {
+void BBuffer::putIntLAt(int value, int index) {
     buff[index++] = value & 0xFF;
     buff[index++] = (value >> 8) & 0xFF;
     buff[index++] = (value >> 16) & 0xFF;
     buff[index]   = (value >> 24) & 0xFF;
 }
 
-void ByteBuffer::putIntBAt(int value, int index) {
+void BBuffer::putIntBAt(int value, int index) {
     buff[index++] = (value >> 24) & 0xFF;
     buff[index++] = (value >> 16) & 0xFF;
     buff[index++] = (value >> 8) & 0xFF;
     buff[index]   = value & 0xFF;
 }
 
-void ByteBuffer::putFloat(float value) {
+void BBuffer::putFloat(float value) {
     if (bigEndian) {
         putFloatB(value);
     } else {
@@ -507,7 +507,7 @@ void ByteBuffer::putFloat(float value) {
     }
 }
 
-void ByteBuffer::putFloatL(float value) {
+void BBuffer::putFloatL(float value) {
     FloatB valueB;
     valueB.value = value;
 
@@ -517,7 +517,7 @@ void ByteBuffer::putFloatL(float value) {
     buff[pos++] = valueB.bytes[3];
 }
 
-void ByteBuffer::putFloatB(float value) {
+void BBuffer::putFloatB(float value) {
     FloatB valueB;
     valueB.value = value;
 
@@ -527,7 +527,7 @@ void ByteBuffer::putFloatB(float value) {
     buff[pos++] = valueB.bytes[0];
 }
 
-void ByteBuffer::putFloatAt(float value, int index) {
+void BBuffer::putFloatAt(float value, int index) {
     if (bigEndian) {
         putFloatBAt(value, index);
     } else {
@@ -535,7 +535,7 @@ void ByteBuffer::putFloatAt(float value, int index) {
     }
 }
 
-void ByteBuffer::putFloatLAt(float value, int index) {
+void BBuffer::putFloatLAt(float value, int index) {
     FloatB valueB;
     valueB.value = value;
 
@@ -545,7 +545,7 @@ void ByteBuffer::putFloatLAt(float value, int index) {
     buff[index]   = valueB.bytes[3];
 }
 
-void ByteBuffer::putFloatBAt(float value, int index) {
+void BBuffer::putFloatBAt(float value, int index) {
     FloatB valueB;
     valueB.value = value;
 
@@ -555,7 +555,7 @@ void ByteBuffer::putFloatBAt(float value, int index) {
     buff[index]   = valueB.bytes[0];
 }
 
-void ByteBuffer::putLong(Long value) {
+void BBuffer::putLong(Long value) {
     if (bigEndian) {
         putLongB(value);
     } else {
@@ -563,7 +563,7 @@ void ByteBuffer::putLong(Long value) {
     }
 }
 
-void ByteBuffer::putLongL(Long value) {
+void BBuffer::putLongL(Long value) {
     buff[pos++] = value & 0xFF;
     buff[pos++] = (value >> 8) & 0xFF;
     buff[pos++] = (value >> 16) & 0xFF;
@@ -574,7 +574,7 @@ void ByteBuffer::putLongL(Long value) {
     buff[pos++] = (value >> 56) & 0xFF;
 }
 
-void ByteBuffer::putLongB(Long value) {
+void BBuffer::putLongB(Long value) {
     buff[pos++] = (value >> 56) & 0xFF;
     buff[pos++] = (value >> 48) & 0xFF;
     buff[pos++] = (value >> 40) & 0xFF;
@@ -585,7 +585,7 @@ void ByteBuffer::putLongB(Long value) {
     buff[pos++] = value & 0xFF;
 }
 
-void ByteBuffer::putLongAt(Long value, int index) {
+void BBuffer::putLongAt(Long value, int index) {
     if (bigEndian) {
         putLongBAt(value, index);
     } else {
@@ -593,7 +593,7 @@ void ByteBuffer::putLongAt(Long value, int index) {
     }
 }
 
-void ByteBuffer::putLongLAt(Long value, int index) {
+void BBuffer::putLongLAt(Long value, int index) {
     buff[index++] = value & 0xFF;
     buff[index++] = (value >> 8) & 0xFF;
     buff[index++] = (value >> 16) & 0xFF;
@@ -604,7 +604,7 @@ void ByteBuffer::putLongLAt(Long value, int index) {
     buff[index]   = (value >> 56) & 0xFF;
 }
 
-void ByteBuffer::putLongBAt(Long value, int index) {
+void BBuffer::putLongBAt(Long value, int index) {
     buff[index++] = (value >> 56) & 0xFF;
     buff[index++] = (value >> 48) & 0xFF;
     buff[index++] = (value >> 40) & 0xFF;
@@ -615,7 +615,7 @@ void ByteBuffer::putLongBAt(Long value, int index) {
     buff[index++] = value & 0xFF;
 }
 
-void ByteBuffer::putDouble(double value) {
+void BBuffer::putDouble(double value) {
     if (bigEndian) {
         putDoubleB(value);
     } else {
@@ -623,7 +623,7 @@ void ByteBuffer::putDouble(double value) {
     }
 }
 
-void ByteBuffer::putDoubleL(double value) {
+void BBuffer::putDoubleL(double value) {
     DoubleB valueB;
     valueB.value = value;
 
@@ -632,7 +632,7 @@ void ByteBuffer::putDoubleL(double value) {
     }
 }
 
-void ByteBuffer::putDoubleB(double value) {
+void BBuffer::putDoubleB(double value) {
     DoubleB valueB;
     valueB.value = value;
 
@@ -641,7 +641,7 @@ void ByteBuffer::putDoubleB(double value) {
     }
 }
 
-void ByteBuffer::putDoubleAt(double value, int index) {
+void BBuffer::putDoubleAt(double value, int index) {
     if (bigEndian) {
         putDoubleBAt(value, index);
     } else {
@@ -649,7 +649,7 @@ void ByteBuffer::putDoubleAt(double value, int index) {
     }
 }
 
-void ByteBuffer::putDoubleLAt(double value, int index) {
+void BBuffer::putDoubleLAt(double value, int index) {
     DoubleB valueB;
     valueB.value = value;
 
@@ -658,7 +658,7 @@ void ByteBuffer::putDoubleLAt(double value, int index) {
     }
 }
 
-void ByteBuffer::putDoubleBAt(double value, int index) {
+void BBuffer::putDoubleBAt(double value, int index) {
     DoubleB valueB;
     valueB.value = value;
 
@@ -667,7 +667,7 @@ void ByteBuffer::putDoubleBAt(double value, int index) {
     }
 }
 
-void ByteBuffer::putString(const char *value, int length) {
+void BBuffer::putString(const char *value, int length) {
     if (bigEndian) {
         putStringB(value, length);
     } else {
@@ -675,19 +675,19 @@ void ByteBuffer::putString(const char *value, int length) {
     }
 }
 
-void ByteBuffer::putStringL(const char *value, int length) {
+void BBuffer::putStringL(const char *value, int length) {
     for (int i = 0; i < length; i++) {
         buff[pos++] = value[i];
     }
 }
 
-void ByteBuffer::putStringB(const char *value, int length) {
+void BBuffer::putStringB(const char *value, int length) {
     for (int i = length - 1; i >= 0; i--) {
         buff[pos++] = value[i];
     }
 }
 
-void ByteBuffer::putStringAt(const char *value, int length, int index) {
+void BBuffer::putStringAt(const char *value, int length, int index) {
     if (bigEndian) {
         putStringBAt(value, length, index);
     } else {
@@ -695,19 +695,19 @@ void ByteBuffer::putStringAt(const char *value, int length, int index) {
     }
 }
 
-void ByteBuffer::putStringLAt(const char *value, int length, int index) {
+void BBuffer::putStringLAt(const char *value, int length, int index) {
     for (int i = 0; i < length; i++) {
         buff[index++] = value[i];
     }
 }
 
-void ByteBuffer::putStringBAt(const char *value, int length, int index) {
+void BBuffer::putStringBAt(const char *value, int length, int index) {
     for (int i = length - 1; i >= 0; i--) {
         buff[index++] = value[i];
     }
 }
 
-char *ByteBuffer::getHexString() {
+char *BBuffer::getHexString() {
     char *str        = (char *) malloc(2 * size * sizeof(char) + 1);
     char  hexArray[] = "0123456789ABCDEF";
 
@@ -721,7 +721,7 @@ char *ByteBuffer::getHexString() {
     return str;
 }
 
-void ByteBuffer::getHexString(char *str) {
+void BBuffer::getHexString(char *str) {
     char hexArray[] = "0123456789ABCDEF";
 
     for (size_t i = 0; i < size; i++) {
@@ -732,8 +732,8 @@ void ByteBuffer::getHexString(char *str) {
     str[size * 2] = '\0';
 }
 
-ByteBuffer ByteBuffer::clone() {
-    ByteBuffer cloned(size);
+BBuffer BBuffer::clone() {
+    BBuffer cloned(size);
 
     for (size_t i = 0; i < size; i++) {
         cloned.putAt(buff[i], i);
@@ -745,7 +745,7 @@ ByteBuffer ByteBuffer::clone() {
     return cloned;
 }
 
-float ByteBuffer::intBitsToFloat(int value) {
+float BBuffer::intBitsToFloat(int value) {
     FloatB valueB;
 
     valueB.bytes[0] = value & 0xFF;
@@ -756,7 +756,7 @@ float ByteBuffer::intBitsToFloat(int value) {
     return valueB.value;
 }
 
-float ByteBuffer::intBitsToFloatPow(int value) {
+float BBuffer::intBitsToFloatPow(int value) {
     int s = (value >> 31) == 0 ? 1 : -1;
     int e = (value >> 23) & 0xFF;
     int m =
@@ -765,7 +765,7 @@ float ByteBuffer::intBitsToFloatPow(int value) {
     return s * m * pow(2, e - 150);
 }
 
-bool ByteBuffer::isArchBigEndian(void) {
+bool BBuffer::isArchBigEndian(void) {
     union {
         int  i;
         char c[4];

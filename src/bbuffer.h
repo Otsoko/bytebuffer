@@ -1,5 +1,5 @@
-#ifndef _BYTEBUFFER_H_
-#define _BYTEBUFFER_H_
+#ifndef _BBUFFER_H_
+#define _BBUFFER_H_
 
 #include <cstddef>
 
@@ -18,7 +18,7 @@ typedef union {
 
 typedef enum { BB_LITTLE_ENDIAN, BB_BIG_ENDIAN } Order;
 
-class ByteBuffer {
+class BBuffer {
 
     byte * buff;
     size_t size;
@@ -26,9 +26,9 @@ class ByteBuffer {
     bool   bigEndian;
 
 public:
-    ByteBuffer(size_t size);
-    ByteBuffer(const char *hexstring);
-    ~ByteBuffer();
+    BBuffer(size_t size);
+    BBuffer(const char *hexstring);
+    ~BBuffer();
 
     size_t getSize();
     void   reset();
@@ -67,7 +67,7 @@ public:
     char * getHexString();
     void   getHexString(char *str);
 
-    ByteBuffer clone();
+    BBuffer clone();
 
 private:
     float  intBitsToFloat(int value);
