@@ -54,6 +54,10 @@ byte *BBuffer::getBytes() {
     return buff;
 }
 
+void BBuffer::getBytes(byte *dst, int index, int length) {
+    memcpy(dst, buff + index, length);
+}
+
 void BBuffer::order(Order order) {
     if (order == BB_BIG_ENDIAN) {
         bigEndian = true;

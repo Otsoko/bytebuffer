@@ -34,6 +34,7 @@ public:
     size_t getSize();
     void   reset();
     byte * getBytes();
+    void   getBytes(byte *dst, int index, int length);
     void   order(Order order);
 
     byte   get();
