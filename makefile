@@ -3,7 +3,8 @@ AR=ar
 RL=ranlib
 CP=cp -r
 
-CXXFLAGS=-Isrc -Wall -O3 -c
+#CXXFLAGS=-Isrc -Ilib -Wall -Wextra -O3 -c
+CXXFLAGS=-Isrc -Ilib -Wall -Wextra -g -c
 LXXFLAGS= -Llib -lbbuffer
 
 OBJDIR=obj
@@ -12,13 +13,13 @@ SRCDIR=src
 
 OBJ=$(OBJDIR)/main.o $(OBJDIR)/bbuffer.o
 LIB=$(LIBDIR)/libbbuffer.a
-EXE=Bbuffer
+EXE=bbuffer
 
 .PHONY: all target clean
 
 all: $(EXE)
 
-Bbuffer: $(LIB) $(OBJ)
+bbuffer: $(LIB) $(OBJ)
 	$(CXX) $(OBJDIR)/main.o $(LXXFLAGS) -o $@
 
 target: $(LIB)
