@@ -430,6 +430,12 @@ void BBuffer::putAt(byte value, int index) {
     buff[index] = value;
 }
 
+void BBuffer::putBuffer(BBuffer *buffer) {
+    for (size_t i = 0; i < buffer->getSize(); i++) {
+        buff[pos++] = buffer->getAt(i);
+    }
+}
+
 void BBuffer::putShort(short value) {
     if (bigEndian) {
         putShortB(value);

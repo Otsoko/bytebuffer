@@ -54,6 +54,7 @@ public:
 
     void   put(byte value);
     void   putAt(byte value, int index);
+    void   putBuffer(BBuffer *buffer);
     void   putShort(short value);
     void   putShortAt(short value, int index);
     void   putInt(int value);
