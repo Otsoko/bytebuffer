@@ -29,6 +29,12 @@ BBuffer::BBuffer(const char *hexstring) {
     }
 }
 
+BBuffer::BBuffer(byte *bytes, size_t size) {
+    this->size = size;
+    buff       = (byte *) malloc(size * sizeof(byte));
+    memcpy(buff, bytes, size);
+}
+
 BBuffer::~BBuffer() {
     size = 0;
     pos  = 0;

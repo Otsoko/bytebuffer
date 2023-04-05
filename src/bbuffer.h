@@ -28,6 +28,7 @@ class BBuffer {
 public:
     BBuffer(size_t size);
     BBuffer(const char *hexstring);
+    BBuffer(byte *bytes, size_t length);
     ~BBuffer();
 
     size_t getSize();

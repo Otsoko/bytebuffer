@@ -3,7 +3,7 @@
 #include <iostream>
 #include <stdlib.h>
 
-void        printBB(BBuffer *byteBuffer);
+void     printBB(BBuffer *byteBuffer);
 BBuffer *test(BBuffer *b);
 
 void printHex(BBuffer *buffer) {
@@ -12,7 +12,7 @@ void printHex(BBuffer *buffer) {
     free(hex);
 }
 
-int main(int argc, char const *argv[]) {
+int main(void) {
 
     // Creamos el BBuffer con un tamaño de 9 bytes
     BBuffer bytebuffer(37);
@@ -142,10 +142,6 @@ int main(int argc, char const *argv[]) {
               << ", s(float): " << sizeof(float) << ", s(double): " << sizeof(double)
               << ", s(u_int64_t): " << sizeof(uint64_t) << std::endl;
 
-    BBuffer *r = NULL;
-    r             = test(r);
-    printBB(r);
-
     BBuffer bbstr("A3B2F1");
     printBB(&bbstr);
 
@@ -153,15 +149,8 @@ int main(int argc, char const *argv[]) {
 }
 
 void printBB(BBuffer *byteBuffer) {
-    // Mostramos el contenido del BBuffer
     for (size_t i = 0; i < byteBuffer->getSize(); i++) {
         std::cout << (int) byteBuffer->getAt(i) << " ";
     }
     std::cout << std::endl;
-}
-
-BBuffer *test(BBuffer *b) {
-    b = new BBuffer(1);
-    b->put(64);
-    return b;
 }
