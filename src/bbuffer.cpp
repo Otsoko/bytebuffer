@@ -9,7 +9,8 @@ BBuffer::BBuffer(size_t size) {
     this->size = size;
     pos        = 0;
     buff       = (byte *) malloc(size * sizeof(byte));
-    bigEndian  = false;
+    memset(buff, 0x00, size);
+    bigEndian = false;
 }
 
 BBuffer::BBuffer(const char *hexstring) {
