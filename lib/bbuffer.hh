@@ -1,5 +1,4 @@
-#ifndef _BBUFFER_H_
-#define _BBUFFER_H_
+#pragma once
 
 #include <cstddef>
 
@@ -127,5 +126,3 @@ private:
     void   putStringLAt(const char *value, int length, int index);
     void   putStringBAt(const char *value, int length, int index);
 };
-
-#endif

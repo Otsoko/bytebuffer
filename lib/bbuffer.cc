@@ -1,4 +1,4 @@
-#include "bbuffer.h"
+#include "bbuffer.hh"
 #include <cmath>
 #include <cstdio>
 #include <iostream>

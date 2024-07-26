@@ -1,5 +1,5 @@
 bbuffer
-lib/
+build/
 .vscode/
 
 # Prerequisites
