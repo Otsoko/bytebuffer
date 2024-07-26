@@ -66,3 +66,24 @@ BBuffer cloned = bytebuffer.clone();
 // Create a BBuffer from a hex string
 BBuffer bbstr("A3B2F1");
 ```
+
+
+## Build
+
+To build this project run
+
+```bash
+$ mkdir build
+$ cd build
+$ cmake ..
+$ make
+```
+
+
+## Run
+
+To run this project run
+
+```bash
+$ ./app
+```
